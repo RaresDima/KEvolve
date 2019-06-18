@@ -4,7 +4,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import java.util.stream.Stream
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
 internal class BitTest {
 
