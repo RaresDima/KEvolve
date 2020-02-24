@@ -23,6 +23,4 @@ class Bit(value: Number) {
     operator fun not(): Bit = flipCopy()
 
     override fun hashCode(): Int = value.hashCode()
-
-
 }
