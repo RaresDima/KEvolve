@@ -10,7 +10,7 @@ class MultiObjectiveFitness(val weights: List<Double>) {
     var values: List<Double>
         get() = _values.toList()
         set(value) {
-            if (weights.size != _values.size)
+            if (weights.size != value.size)
                 throw IncorrectFitnessValuesLengthException("weight.size=${weights.size} != input.size=${value.size}")
 
             for (i in 0..weights.lastIndex)

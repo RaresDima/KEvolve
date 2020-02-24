@@ -1,6 +1,8 @@
 package fitness
 
+import exceptions.IncorrectFitnessValuesLengthException
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -35,11 +37,11 @@ internal class MultiObjectiveFitnessTest {
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
-    fun getWeights(w: List<Double>) = assertEquals(MultiObjectiveFitness(w).weights, w)
+    fun `get weights`(w: List<Double>) = assertEquals(MultiObjectiveFitness(w).weights, w)
 
 
     @Test
-    fun `getValues uninitialized`() = assertEquals(
+    fun `get values uninitialized`() = assertEquals(
         MultiObjectiveFitness(List(5) { 0.0 }).values,
                                                    List(5) { Double.NEGATIVE_INFINITY})
 
@@ -48,6 +50,14 @@ internal class MultiObjectiveFitnessTest {
     fun `get and set values initialized`(v: List<Double>) {
         val fit = MultiObjectiveFitness(List(v.size) { 0.0 }).apply { values = v }
         assertEquals(fit.values, v)
+    }
+
+    @Test
+    fun `set values incorrect length`() {
+        assertThrows<IncorrectFitnessValuesLengthException> {
+            MultiObjectiveFitness(List(5) { 0.0 })
+                .apply { values = List(10) { 0.0 } }
+        }
     }
 
 
