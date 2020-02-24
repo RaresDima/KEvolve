@@ -1,6 +1,8 @@
+package fitness
+
 import exceptions.IncorrectFitnessValuesLengthException
 
-class Fitness(val weights: List<Double>) {
+class MultiObjectiveFitness(val weights: List<Double>) {
 
     var valid: Boolean = false
 

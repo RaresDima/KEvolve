@@ -1,3 +1,5 @@
+package fitness
+
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -6,7 +8,7 @@ import java.util.stream.Stream
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
-internal class FitnessTest {
+internal class MultiObjectiveFitnessTest {
 
     companion object {
 
@@ -33,17 +35,18 @@ internal class FitnessTest {
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
-    fun getWeights(w: List<Double>) = assertEquals(Fitness(w).weights, w)
+    fun getWeights(w: List<Double>) = assertEquals(MultiObjectiveFitness(w).weights, w)
 
 
     @Test
-    fun `getValues uninitialized`() = assertEquals(Fitness(List(5) { 0.0 }).values,
+    fun `getValues uninitialized`() = assertEquals(
+        MultiObjectiveFitness(List(5) { 0.0 }).values,
                                                    List(5) { Double.NEGATIVE_INFINITY})
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
     fun `get and set values initialized`(v: List<Double>) {
-        val fit = Fitness(List(v.size) { 0.0 }).apply { values = v }
+        val fit = MultiObjectiveFitness(List(v.size) { 0.0 }).apply { values = v }
         assertEquals(fit.values, v)
     }
 
@@ -51,7 +54,7 @@ internal class FitnessTest {
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
     fun weightedValues(wv: List<Double>) {
-        val fit = Fitness(wv).apply { values = wv }
+        val fit = MultiObjectiveFitness(wv).apply { values = wv }
         assertEquals(
             fit.weightedValues(),
             (0..wv.lastIndex).map { i -> wv[i] * wv[i] }
@@ -61,7 +64,7 @@ internal class FitnessTest {
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
     fun weightedValue(wv: List<Double>) {
-        val fit = Fitness(wv).apply { values = wv }
+        val fit = MultiObjectiveFitness(wv).apply { values = wv }
         assertEquals(
             fit.weightedValue(),
             (0..wv.lastIndex).sumByDouble { i -> wv[i] * wv[i] }
@@ -71,19 +74,19 @@ internal class FitnessTest {
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
-    fun `valid uninitialized`(w: List<Double>) = assertEquals(Fitness(w).valid, false)
+    fun `valid uninitialized`(w: List<Double>) = assertEquals(MultiObjectiveFitness(w).valid, false)
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
     fun `valid initialized`(wv: List<Double>) {
-        val fit = Fitness(wv).apply { values = wv }
+        val fit = MultiObjectiveFitness(wv).apply { values = wv }
         assertEquals(fit.valid, true)
     }
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
     fun invalidate(wv: List<Double>) {
-        val fit = Fitness(wv).apply { values = wv }
+        val fit = MultiObjectiveFitness(wv).apply { values = wv }
         assertEquals(fit.valid, true)
         fit.invalidate()
         assertEquals(fit.valid, false)
