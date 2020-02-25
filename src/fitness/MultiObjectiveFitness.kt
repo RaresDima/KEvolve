@@ -2,10 +2,7 @@ package fitness
 
 import exceptions.IncorrectFitnessValuesLengthException
 
-class MultiObjectiveFitness(val weights: List<Double>) {
-
-    var valid: Boolean = false
-
+class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
     private val _values: MutableList<Double> = MutableList(weights.size) { Double.NEGATIVE_INFINITY }
     var values: List<Double>
         get() = _values.toList()
@@ -19,7 +16,6 @@ class MultiObjectiveFitness(val weights: List<Double>) {
             valid = true
         }
 
-
     fun weightedValues(): List<Double> = weights.zip(_values, Double::times)
 
     fun weightedValue(): Double {
@@ -29,6 +25,6 @@ class MultiObjectiveFitness(val weights: List<Double>) {
         return sum
     }
 
-    fun invalidate() { valid = false }
+    override fun value(): Double = weightedValue()
 
 }
