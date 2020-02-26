@@ -1,10 +1,7 @@
-import extensions.delegates.AssignOnce
-import fitness.Fitness
+import individual.BaseIndividual
 
 
-class Ind {
-    var fitness: Fitness by AssignOnce()
-}
+class Ind: BaseIndividual()
 
 
 
