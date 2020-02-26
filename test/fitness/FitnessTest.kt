@@ -24,6 +24,66 @@ internal class FitnessTest {
             Arguments.of(Double.POSITIVE_INFINITY)
         )
 
+        @JvmStatic
+        fun fitnessComparisonValueProvider(): Stream<Arguments> = Stream.of(
+
+            Arguments.of(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, 0),
+            Arguments.of(Double.NEGATIVE_INFINITY, Double.MIN_VALUE, -1),
+            Arguments.of(Double.NEGATIVE_INFINITY, -1.0, -1),
+            Arguments.of(Double.NEGATIVE_INFINITY, 0.0, -1),
+            Arguments.of(Double.NEGATIVE_INFINITY, +1.0, -1),
+            Arguments.of(Double.NEGATIVE_INFINITY, Double.MAX_VALUE, -1),
+            Arguments.of(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, -1),
+
+            Arguments.of(Double.MIN_VALUE, Double.NEGATIVE_INFINITY, +1),
+            Arguments.of(Double.MIN_VALUE, Double.MIN_VALUE, 0),
+            Arguments.of(Double.MIN_VALUE, -1.0, -1),
+            Arguments.of(Double.MIN_VALUE, 0.0, -1),
+            Arguments.of(Double.MIN_VALUE, +1.0, -1),
+            Arguments.of(Double.MIN_VALUE, Double.MAX_VALUE, -1),
+            Arguments.of(Double.MIN_VALUE, Double.POSITIVE_INFINITY, -1),
+
+            Arguments.of(-1.0, Double.NEGATIVE_INFINITY, +1),
+            Arguments.of(-1.0, Double.MIN_VALUE, +1),
+            Arguments.of(-1.0, -1.0, 0),
+            Arguments.of(-1.0, 0.0, -1),
+            Arguments.of(-1.0, +1.0, -1),
+            Arguments.of(-1.0, Double.MAX_VALUE, -1),
+            Arguments.of(-1.0, Double.POSITIVE_INFINITY, -1),
+
+            Arguments.of(0.0, Double.NEGATIVE_INFINITY, +1),
+            Arguments.of(0.0, Double.MIN_VALUE, +1),
+            Arguments.of(0.0, -1.0, +1),
+            Arguments.of(0.0, 0.0, 0),
+            Arguments.of(0.0, +1.0, -1),
+            Arguments.of(0.0, Double.MAX_VALUE, -1),
+            Arguments.of(0.0, Double.POSITIVE_INFINITY, -1),
+
+            Arguments.of(+1.0, Double.NEGATIVE_INFINITY, +1),
+            Arguments.of(+1.0, Double.MIN_VALUE, +1),
+            Arguments.of(+1.0, -1.0, +1),
+            Arguments.of(+1.0, 0.0, +1),
+            Arguments.of(+1.0, +1.0, 0),
+            Arguments.of(+1.0, Double.MAX_VALUE, -1),
+            Arguments.of(+1.0, Double.POSITIVE_INFINITY, -1),
+
+            Arguments.of(Double.MAX_VALUE, Double.NEGATIVE_INFINITY, +1),
+            Arguments.of(Double.MAX_VALUE, Double.MIN_VALUE, +1),
+            Arguments.of(Double.MAX_VALUE, -1.0, +1),
+            Arguments.of(Double.MAX_VALUE, 0.0, +1),
+            Arguments.of(Double.MAX_VALUE, +1.0, +1),
+            Arguments.of(Double.MAX_VALUE, Double.MAX_VALUE, 0),
+            Arguments.of(Double.MAX_VALUE, Double.POSITIVE_INFINITY, -1),
+
+            Arguments.of(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, +1),
+            Arguments.of(Double.POSITIVE_INFINITY, Double.MIN_VALUE, +1),
+            Arguments.of(Double.POSITIVE_INFINITY, -1.0, +1),
+            Arguments.of(Double.POSITIVE_INFINITY, 0.0, +1),
+            Arguments.of(Double.POSITIVE_INFINITY, +1.0, +1),
+            Arguments.of(Double.POSITIVE_INFINITY, Double.MAX_VALUE, +1),
+            Arguments.of(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 0)
+        )
+
     }
 
 
@@ -49,6 +109,16 @@ internal class FitnessTest {
         assertEquals(fit.valid, true)
         fit.invalidate()
         assertEquals(fit.valid, false)
+    }
+
+    @ParameterizedTest
+    @MethodSource("fitnessComparisonValueProvider")
+    fun compareTo(v1: Double, v2: Double, result: Int) {
+        val fit1 = Fitness()
+        val fit2 = Fitness()
+        fit1.value = v1
+        fit2.value = v2
+        assertEquals(fit1.compareTo(fit2), result)
     }
 
 }

@@ -18,7 +18,9 @@ abstract class BaseFitness {
 
     operator fun compareTo(other: Any?): Int =
         if (other is BaseFitness)
-            this.value().minus(other.value()).sign.toInt()
+            this.value().minus(other.value())
+                .let { if (it.isNaN()) 0.0 else it }
+                .sign.toInt()
         else
             throw IllegalArgumentException("Can only compare to another class derived from BaseFitness.")
 
