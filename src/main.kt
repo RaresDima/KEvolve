@@ -11,6 +11,4 @@ fun main(args: Array<String>) {
 
     val ind: Ind = Ind()
     println(ind.fitness)
-
-    
 }

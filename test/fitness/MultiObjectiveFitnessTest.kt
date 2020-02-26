@@ -16,20 +16,9 @@ internal class MultiObjectiveFitnessTest {
 
         @JvmStatic
         fun ctorWeightsAndValuesProvider(): Stream<Arguments> = Stream.of(
-
             Arguments.of(listOf(1.0, 0.5, 0.1, -0.3, 0.7)),
             Arguments.of(listOf(0.0, -0.001, 0.2 + 0.3)),
-
-            Arguments.of(
-                Random(System.currentTimeMillis())
-                    .let { random ->
-                        List(
-                            size = random.nextInt(100, 1000),
-                            init = { random.nextDouble() }
-                        )
-                    }
-            )
-
+            Arguments.of(List(size = Random.nextInt(100, 1000), init = { Random.nextDouble() }))
         )
 
     }
