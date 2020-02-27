@@ -14,8 +14,8 @@ import kotlin.math.cos
  *
  * @return The value of the Rastrigin function R(x).
  */
-fun rastrigin(x: Iterable<Double>): Double {
+fun rastrigin(x: List<Double>): Double {
     val A = 10
-    val n = x.toList().size
+    val n = x.size
     return A * n + x.sumByDouble { xi -> xi * xi - A * cos(2 * PI * xi) }
 }

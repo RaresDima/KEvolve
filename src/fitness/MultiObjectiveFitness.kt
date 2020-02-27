@@ -2,6 +2,14 @@ package fitness
 
 import exceptions.IncorrectFitnessValuesLengthException
 
+/**
+ * Multi-objective fitness.
+ *
+ * @property weights The weights of each objective value.
+ * @property values The objective values.
+ *
+ * @constructor Sets the [weights] for this [MultiObjectiveFitness].
+ */
 class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
     private val _values: MutableList<Double> = MutableList(weights.size) { Double.NEGATIVE_INFINITY }
     var values: List<Double>
@@ -16,8 +24,19 @@ class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
             valid = true
         }
 
+    /**
+     * Retrieves the weighted objective values.
+     * I.e. Each objective value multiplied by its weight.
+     *
+     * @return The weighted objective values
+     */
     fun weightedValues(): List<Double> = weights.zip(_values, Double::times)
 
+    /**
+     * Retrieves the sum of the weighted objective values.
+     *
+     * @return The sum of the weighted objective values
+     */
     fun weightedValue(): Double {
         var sum = 0.0
         for (i in 0..weights.lastIndex)
@@ -25,6 +44,10 @@ class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
         return sum
     }
 
+    /**
+     * Retrieves the value of this Fitness object. This is a single value.
+     * For multi-objective purposes this is computed using the weighted sum of the
+     * objective values.
+     */
     override fun value(): Double = weightedValue()
-
 }
