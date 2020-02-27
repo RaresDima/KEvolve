@@ -1,6 +1,5 @@
 package individual
 
-import extensions.delegates.AssignOnce
 import fitness.MultiObjectiveFitness
 
 /**

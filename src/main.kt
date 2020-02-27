@@ -1,7 +1,6 @@
 import individual.Individual
 import individual.MultiObjectiveIndividual
 import population.PopulationFactory
-import java.lang.IllegalStateException
 
 
 class Ind: Individual()
@@ -15,12 +14,15 @@ fun main(args: Array<String>) {
     val ind = Ind()
     try {
         println(ind.fitness)
-    } catch (e: IllegalStateException) {
+    } catch (e: UninitializedPropertyAccessException) {
         println("ind.fitness threw $e")
     }
 
     val pf = PopulationFactory(::Ind)
-
     val pop = pf.spawn(50)
-    println(pop[0].fitness.value())
+    println(pop[0].fitness.value)
+
+    val mopf = PopulationFactory(::MOInd)
+    val mopop = mopf.spawn(50)
+    println(mopop[0].fitness.values)
 }

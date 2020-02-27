@@ -1,5 +1,6 @@
 package population
 
+import exceptions.population.NotAnIndividualException
 import fitness.MultiObjectiveFitness
 import fitness.Fitness
 import individual.BaseIndividual
@@ -17,11 +18,22 @@ import java.lang.IllegalStateException
  *  A function that takes no arguments and creates an individual.
  *  I.e. an instance of [INDIVIDUAL].
  *
+ * @property weights
+ *  The weights to use for multi-objective optimization. I.e. individuals deriving
+ *  [MultiObjectiveIndividual].
+ *
  * @constructor
+ * @param createIndividual
+ *  A function that takes no arguments and creates an individual.
+ *  I.e. an instance of [INDIVIDUAL].
+ *
  *  Stores the function (passed as a parameter) that will be used to instantiate
  *  the individuals.
  */
-class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(val createIndividual: () -> INDIVIDUAL) {
+class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(
+    val createIndividual: () -> INDIVIDUAL,
+    val weights: List<Double> = listOf()
+) {
 
     /**
      * Spawns (instantiates) the specified number of individuals.
@@ -36,9 +48,8 @@ class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(val createIndividual:
                 when (this) {
                     is Individual -> fitness = Fitness()
                     is MultiObjectiveIndividual -> fitness = MultiObjectiveFitness(listOf(1.0))
-                    else -> throw IllegalStateException("yay")
+                    else -> throw NotAnIndividualException("$this does not inherit from an individual.")
                 }
-
             }
         }
 }

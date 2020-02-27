@@ -1,7 +1,6 @@
 package extensions.delegates
 
-import exceptions.extensions.delegates.AlreadyAssignedAssignOncePropertyException
-import exceptions.extensions.delegates.UninitializedAssignOncePropertyException
+import exceptions.extensions.delegates.AlreadyAssignedPropertyAssignmentException
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -11,10 +10,10 @@ import kotlin.reflect.KProperty
  * A var property using this delegate can only be assigned once.
  *
  * If the variable is read from before the initialization then an
- * [UninitializedAssignOncePropertyException] is thrown.
+ * [UninitializedPropertyAccessException] is thrown.
  *
  * If the variable is assigned another value after being initialized then an
- * [AlreadyAssignedAssignOncePropertyException] is thrown.
+ * [AlreadyAssignedPropertyAssignmentException] is thrown.
  */
 class AssignOnce<in THIS_CLASS: Any, PROPERTY_TYPE: Any>: ReadWriteProperty<THIS_CLASS, PROPERTY_TYPE> {
     var isSet: Boolean = false
@@ -24,7 +23,7 @@ class AssignOnce<in THIS_CLASS: Any, PROPERTY_TYPE: Any>: ReadWriteProperty<THIS
         if (isSet)
             return value
         else
-            throw UninitializedAssignOncePropertyException("${thisRef.javaClass.name}.${property.name} has not been set.")
+            throw UninitializedPropertyAccessException("${thisRef.javaClass.name}.${property.name} has not been set.")
 
     }
 
@@ -34,7 +33,7 @@ class AssignOnce<in THIS_CLASS: Any, PROPERTY_TYPE: Any>: ReadWriteProperty<THIS
             isSet = true
         }
         else
-            throw AlreadyAssignedAssignOncePropertyException("${thisRef.javaClass.name}.${property.name} can only be set once.")
+            throw AlreadyAssignedPropertyAssignmentException("${thisRef.javaClass.name}.${property.name} can only be set once.")
 
     }
 }
