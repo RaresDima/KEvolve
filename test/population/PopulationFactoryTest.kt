@@ -1,6 +1,11 @@
 package population
 
+import exceptions.population.NotAnIndividualException
+import fitness.Fitness
+import individual.BaseIndividual
 import individual.Individual
+import individual.MultiObjectiveIndividual
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -20,10 +25,22 @@ class PopulationFactoryTest {
         )
 
         class MyIndividual: Individual()
+        class MyMultiObjectiveIndividual: MultiObjectiveIndividual()
+
+        class MyNotAnIndividual: BaseIndividual<Fitness>()
 
     }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
-    fun `initialize n`(size: Int) = assertEquals(PopulationFactory(::MyIndividual).spawn(size).size, size)
+    fun `initialize n single-objective`(size: Int) = assertEquals(PopulationFactory(::MyIndividual).spawn(size).size, size)
+
+    @ParameterizedTest
+    @MethodSource("popSizeValueProvider")
+    fun `initialize n multi-objective`(size: Int) = assertEquals(PopulationFactory(::MyMultiObjectiveIndividual).spawn(size).size, size)
+
+    @ParameterizedTest
+    @MethodSource("popSizeValueProvider")
+    fun `initialize n non-individual`(size: Int) = assertThrows<NotAnIndividualException> { PopulationFactory(::MyNotAnIndividual).spawn(size) }
+
 }

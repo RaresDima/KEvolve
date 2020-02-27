@@ -41,6 +41,8 @@ class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(
      * @param n The number of individuals to create.
      *
      * @return A [List] with the created individuals.
+     *
+     * @throws NotAnIndividualException If [INDIVIDUAL] does not inherit an Individual class.
      */
     fun spawn(n: Int): List<INDIVIDUAL> =
         List(n) {
