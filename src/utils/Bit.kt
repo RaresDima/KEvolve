@@ -1,3 +1,5 @@
+package utils
+
 import extensions.toInt
 
 class Bit(value: Number) {

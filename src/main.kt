@@ -1,6 +1,7 @@
 import individual.Individual
 import individual.MultiObjectiveIndividual
 import population.PopulationFactory
+import utils.Bit
 
 
 class Ind: Individual()
