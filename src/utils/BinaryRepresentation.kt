@@ -24,6 +24,7 @@ import kotlin.math.pow
  * @property nIntervals The number of subintervals the domain is split into.
  * @property nBits The number of bits needed to represent a value.
  */
+// TODO: Tests.
 class BinaryRepresentation(
     val min: Double,
     val max: Double,
