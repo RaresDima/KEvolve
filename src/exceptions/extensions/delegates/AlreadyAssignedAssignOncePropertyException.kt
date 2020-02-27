@@ -1,4 +1,4 @@
-package exceptions.delegates
+package exceptions.extensions.delegates
 
 import extensions.delegates.AssignOnce
 

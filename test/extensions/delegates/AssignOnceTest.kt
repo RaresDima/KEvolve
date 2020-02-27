@@ -1,14 +1,13 @@
 package extensions.delegates
 
-import exceptions.delegates.AlreadyAssignedAssignOncePropertyException
-import exceptions.delegates.UninitializedAssignOncePropertyException
+import exceptions.extensions.delegates.AlreadyAssignedAssignOncePropertyException
+import exceptions.extensions.delegates.UninitializedAssignOncePropertyException
 import fitness.Fitness
 import fitness.MultiObjectiveFitness
 import individual.Individual
 import individual.MultiObjectiveIndividual
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalStateException
 
 internal class AssignOnceTest {
 

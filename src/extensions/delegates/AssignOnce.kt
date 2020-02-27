@@ -1,8 +1,7 @@
 package extensions.delegates
 
-import exceptions.delegates.AlreadyAssignedAssignOncePropertyException
-import exceptions.delegates.UninitializedAssignOncePropertyException
-import java.lang.IllegalStateException
+import exceptions.extensions.delegates.AlreadyAssignedAssignOncePropertyException
+import exceptions.extensions.delegates.UninitializedAssignOncePropertyException
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 

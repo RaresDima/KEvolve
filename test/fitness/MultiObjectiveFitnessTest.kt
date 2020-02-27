@@ -1,6 +1,6 @@
 package fitness
 
-import exceptions.IncorrectFitnessValuesLengthException
+import exceptions.fitness.IncorrectFitnessValuesLengthException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

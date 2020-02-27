@@ -1,4 +1,4 @@
-package exceptions
+package exceptions.fitness
 
 import fitness.MultiObjectiveFitness
 
