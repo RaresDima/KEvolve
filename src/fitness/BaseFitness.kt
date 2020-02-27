@@ -4,7 +4,7 @@ import java.lang.IllegalArgumentException
 import kotlin.math.sign
 
 /**
- * The Fitness class that exposes the functionalities all Fitness classes should
+ * Base Fitness class that exposes functionalities all Fitness classes should
  * have.
  *
  * @property valid
