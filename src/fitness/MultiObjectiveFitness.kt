@@ -12,7 +12,7 @@ import exceptions.IncorrectFitnessValuesLengthException
  *  Sets the [weights] (passed as a [List] parameter) for this
  *  [MultiObjectiveFitness].
  */
-class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
+open class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
     private val _values: MutableList<Double> = MutableList(weights.size) { Double.NEGATIVE_INFINITY }
     var values: List<Double>
         get() = _values.toList()

@@ -1,9 +1,11 @@
-import individual.BaseIndividual
-import population.PopulationBuilder
+import individual.Individual
+import individual.MultiObjectiveIndividual
+import population.PopulationFactory
+import java.lang.IllegalStateException
 
 
-class Ind: BaseIndividual()
-
+class Ind: Individual()
+class MOInd: MultiObjectiveIndividual()
 
 
 fun main(args: Array<String>) {
@@ -11,9 +13,14 @@ fun main(args: Array<String>) {
     println(Bit(0f).value)
 
     val ind = Ind()
-    println(ind.fitness)
+    try {
+        println(ind.fitness)
+    } catch (e: IllegalStateException) {
+        println("ind.fitness threw $e")
+    }
 
-    val popb = PopulationBuilder(::Ind)
+    val pf = PopulationFactory(::Ind)
 
-    popb.spawn(50)
+    val pop = pf.spawn(50)
+    println(pop[0].fitness.value())
 }

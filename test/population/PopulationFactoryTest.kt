@@ -1,13 +1,13 @@
 package population
 
-import individual.BaseIndividual
+import individual.Individual
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 import kotlin.test.assertEquals
 
-class PopulationBuilderTest {
+class PopulationFactoryTest {
 
     companion object {
 
@@ -19,11 +19,11 @@ class PopulationBuilderTest {
             Arguments.of(1000)
         )
 
-        class Individual: BaseIndividual()
+        class MyIndividual: Individual()
 
     }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
-    fun `initialize n`(size: Int) = assertEquals(PopulationBuilder(::Individual).spawn(size).size, size)
+    fun `initialize n`(size: Int) = assertEquals(PopulationFactory(::MyIndividual).spawn(size).size, size)
 }

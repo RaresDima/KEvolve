@@ -1,39 +1,36 @@
 package extensions.delegates
 
+import exceptions.delegates.AlreadyAssignedAssignOncePropertyException
+import exceptions.delegates.UninitializedAssignOncePropertyException
 import fitness.Fitness
 import fitness.MultiObjectiveFitness
-import individual.BaseIndividual
-import individual.BaseMultiObjectiveIndividual
+import individual.Individual
+import individual.MultiObjectiveIndividual
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 import java.lang.IllegalStateException
-import java.util.stream.Stream
-import kotlin.test.assertEquals
 
 internal class AssignOnceTest {
 
     companion object {
-        class Individual: BaseIndividual()
-        class MultiObjectiveIndividual: BaseMultiObjectiveIndividual()
+        class MyIndividual: Individual()
+        class MyMultiObjectiveIndividual: MultiObjectiveIndividual()
     }
 
 
     @Test
     fun `Fitness uninitialized`() {
-        val ind = Individual()
-        assertThrows<IllegalStateException>("Individual.fitness has not been set.") {
+        val ind = MyIndividual()
+        assertThrows<UninitializedAssignOncePropertyException>("Individual.fitness has not been set.") {
             ind.fitness
         }
     }
 
     @Test
     fun `Fitness initialized`() {
-        val ind = Individual()
+        val ind = MyIndividual()
         ind.fitness = Fitness()
-        assertThrows<IllegalStateException>("Individual.fitness can only be set once.") {
+        assertThrows<AlreadyAssignedAssignOncePropertyException>("Individual.fitness can only be set once.") {
             ind.fitness = Fitness()
         }
     }
@@ -41,17 +38,17 @@ internal class AssignOnceTest {
 
     @Test
     fun `MultiObjectiveFitness uninitialized`() {
-        val ind = MultiObjectiveIndividual()
-        assertThrows<IllegalStateException>("MultiObjectiveIndividual.fitness has not been set.") {
+        val ind = MyMultiObjectiveIndividual()
+        assertThrows<UninitializedAssignOncePropertyException>("MultiObjectiveIndividual.fitness has not been set.") {
             ind.fitness
         }
     }
 
     @Test
     fun `MultiObjectiveFitness initialized`() {
-        val ind = MultiObjectiveIndividual()
+        val ind = MyMultiObjectiveIndividual()
         ind.fitness = MultiObjectiveFitness(listOf(0.1, 0.2, 0.3))
-        assertThrows<IllegalStateException>("MultiObjectiveIndividual.fitness can only be set once.") {
+        assertThrows<AlreadyAssignedAssignOncePropertyException>("MultiObjectiveIndividual.fitness can only be set once.") {
             ind.fitness = MultiObjectiveFitness(listOf(0.2, 0.4, 0.6))
         }
     }

@@ -1,10 +1,14 @@
 package population
 
+import fitness.MultiObjectiveFitness
 import fitness.Fitness
 import individual.BaseIndividual
+import individual.Individual
+import individual.MultiObjectiveIndividual
+import java.lang.IllegalStateException
 
 /**
- * Builder for the population of individuals to be used in single-objective
+ * Handles instantiation of individuals to be used in single-objective
  * optimization.
  *
  * @param INDIVIDUAL The class representing an individual.
@@ -17,7 +21,7 @@ import individual.BaseIndividual
  *  Stores the function (passed as a parameter) that will be used to instantiate
  *  the individuals.
  */
-class PopulationBuilder<out INDIVIDUAL: BaseIndividual>(val createIndividual: () -> INDIVIDUAL) {
+class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(val createIndividual: () -> INDIVIDUAL) {
 
     /**
      * Spawns (instantiates) the specified number of individuals.
@@ -29,7 +33,12 @@ class PopulationBuilder<out INDIVIDUAL: BaseIndividual>(val createIndividual: ()
     fun spawn(n: Int): List<INDIVIDUAL> =
         List(n) {
             createIndividual().apply {
-                fitness = Fitness()
+                when (this) {
+                    is Individual -> fitness = Fitness()
+                    is MultiObjectiveIndividual -> fitness = MultiObjectiveFitness(listOf(1.0))
+                    else -> throw IllegalStateException("yay")
+                }
+
             }
         }
 }

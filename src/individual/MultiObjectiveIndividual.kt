@@ -17,6 +17,4 @@ import fitness.MultiObjectiveFitness
  *
  * @property fitness The [MultiObjectiveFitness] object of this individual.
  */
-abstract class BaseMultiObjectiveIndividual {
-    var fitness: MultiObjectiveFitness by AssignOnce()
-}
+abstract class MultiObjectiveIndividual: BaseIndividual<MultiObjectiveFitness>()

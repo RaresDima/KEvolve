@@ -1,22 +1,8 @@
 package individual
 
 import extensions.delegates.AssignOnce
-import fitness.Fitness
+import fitness.BaseFitness
 
-/**
- * Single-objective Individual class.
- *
- * All classes used as individuals for single-objective optimization should
- * inherit from this using the default, no argument constructor.
- *
- * E.g. `class MyIndividual(...): BaseIndividual() {...}`
- *
- * Inheriting from this class is necessary for the [Fitness] creation and
- * initialization to be handled automatically, with no further action on the
- * matter required by the user.
- *
- * @property fitness The [Fitness] object of this individual.
- */
-abstract class BaseIndividual {
-    var fitness: Fitness by AssignOnce()
+abstract class BaseIndividual<FITNESS_TYPE: BaseFitness> {
+    var fitness: FITNESS_TYPE by AssignOnce()
 }
