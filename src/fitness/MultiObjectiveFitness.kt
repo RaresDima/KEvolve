@@ -8,7 +8,9 @@ import exceptions.IncorrectFitnessValuesLengthException
  * @property weights The weights of each objective value.
  * @property values The objective values.
  *
- * @constructor Sets the [weights] for this [MultiObjectiveFitness].
+ * @constructor
+ *  Sets the [weights] (passed as a [List] parameter) for this
+ *  [MultiObjectiveFitness].
  */
 class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
     private val _values: MutableList<Double> = MutableList(weights.size) { Double.NEGATIVE_INFINITY }
