@@ -4,6 +4,17 @@ import java.lang.IllegalStateException
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Delegated Property used to make values lazily initializable.
+ *
+ * A var property using this delegate can only be assigned once.
+ *
+ * If the variable is read from before the initialization then an
+ * [IllegalStateException] is thrown.
+ *
+ * If the variable is assigned another value after being initialized then an
+ * [IllegalStateException] is thrown.
+ */
 class AssignOnce<in THIS_CLASS: Any, PROPERTY_TYPE: Any>: ReadWriteProperty<THIS_CLASS, PROPERTY_TYPE> {
     var isSet: Boolean = false
     lateinit var value: PROPERTY_TYPE
