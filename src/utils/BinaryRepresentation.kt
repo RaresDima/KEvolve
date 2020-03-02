@@ -25,6 +25,14 @@ import kotlin.math.pow
  * @property domainSize Size of the domain. [max] - [min].
  * @property nIntervals The number of subintervals the domain is split into.
  * @property nBits The number of bits needed to represent a value.
+ *
+ * @constructor
+ * @param min The lower bound of the domain.
+ * @param max The upper bound of the domain.
+ * @param digits How many digits after the decimal point should be represented.
+ *
+ * @throws InvalidDomainBoundsException if [min] >= [max]
+ * @throws InvalidPrecisionException if [digits] < 0
  */
 class BinaryRepresentation(
     val min: Double,
