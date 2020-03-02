@@ -14,6 +14,12 @@ import kotlin.reflect.KProperty
  *
  * If the variable is assigned another value after being initialized then an
  * [AlreadyAssignedPropertyAssignmentException] is thrown.
+ *
+ * @throws UninitializedPropertyAccessException
+ *  if the variable is read from before the initialization.
+ *
+ * @throws AlreadyAssignedPropertyAssignmentException
+ *  if the variable is assigned another value after being initialized.
  */
 class AssignOnce<in THIS_CLASS: Any, PROPERTY_TYPE: Any>: ReadWriteProperty<THIS_CLASS, PROPERTY_TYPE> {
     var isSet: Boolean = false
