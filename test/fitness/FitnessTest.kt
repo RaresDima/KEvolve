@@ -146,6 +146,7 @@ internal class FitnessTest {
         assertEquals(fit.valid, false)
     }
 
+
     @ParameterizedTest
     @MethodSource("fitnessComparisonValueProvider")
     fun compareTo(v1: Double, v2: Double, result: Int) {
@@ -154,6 +155,33 @@ internal class FitnessTest {
         fit1.value = v1
         fit2.value = v2
         assertEquals(fit1.compareTo(fit2), result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("fitnessComparisonValueProvider")
+    fun equals(v1: Double, v2: Double, result: Int) {
+        val fit1 = Fitness()
+        val fit2 = Fitness()
+        fit1.value = v1
+        fit2.value = v2
+        assertEquals(fit1 == fit2, v1 == v2)
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("fitnessValueProvider")
+    fun `copy produces same value`(f: Double) {
+        val fit = Fitness()
+        fit.value = f
+        assert(fit == fit.copy())
+    }
+
+    @ParameterizedTest
+    @MethodSource("fitnessValueProvider")
+    fun `copy produces different object`(f: Double) {
+        val fit = Fitness()
+        fit.value = f
+        assert(fit !== fit.copy())
     }
 
 }
