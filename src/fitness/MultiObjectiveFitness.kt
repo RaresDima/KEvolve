@@ -7,11 +7,19 @@ import exceptions.fitness.EmptyWeightsException
  * Multi-objective fitness.
  *
  * @property weights The weights of each objective value.
+ *
  * @property values The objective values.
+ * @throws IncorrectFitnessValuesLengthException
+ *  on assignment if the size of the objective values is different from the size of
+ *  [weights].
  *
  * @constructor
  *  Sets the [weights] (passed as a [List] parameter) for this
  *  [MultiObjectiveFitness].
+ *
+ * @param weights The weights of each objective value.
+ *
+ * @throws EmptyWeightsException if [weights] is empty.
  */
 class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
 
