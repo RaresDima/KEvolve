@@ -1,6 +1,7 @@
 package fitness
 
 import exceptions.fitness.IncorrectFitnessValuesLengthException
+import exceptions.fitness.EmptyWeightsException
 
 /**
  * Multi-objective fitness.
@@ -13,6 +14,12 @@ import exceptions.fitness.IncorrectFitnessValuesLengthException
  *  [MultiObjectiveFitness].
  */
 class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
+
+    init {
+        if (weights.isEmpty())
+            throw EmptyWeightsException("weights.size = ${weights.size} ")
+    }
+
     private val _values: MutableList<Double> = MutableList(weights.size) { Double.NEGATIVE_INFINITY }
     var values: List<Double>
         get() = _values.toList()

@@ -1,5 +1,6 @@
 package fitness
 
+import exceptions.fitness.EmptyWeightsException
 import exceptions.fitness.IncorrectFitnessValuesLengthException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -23,6 +24,8 @@ internal class MultiObjectiveFitnessTest {
 
     }
 
+    @Test
+    fun `no weights`() { assertThrows<EmptyWeightsException> { MultiObjectiveFitness(listOf()) } }
 
     @ParameterizedTest
     @MethodSource("ctorWeightsAndValuesProvider")
