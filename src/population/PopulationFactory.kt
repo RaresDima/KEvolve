@@ -27,13 +27,22 @@ import individual.MultiObjectiveIndividual
  *  A function that takes no arguments and creates an individual.
  *  I.e. an instance of [INDIVIDUAL].
  *
+ * @param weights The list of weights to use for [MultiObjectiveIndividual]s
+ *
  *  Stores the function (passed as a parameter) that will be used to instantiate
  *  the individuals.
  */
 class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
     val createIndividual: () -> INDIVIDUAL,
-    val weights: List<Double> = listOf(1.0)
+    val weights: List<Double>
 ) {
+
+    /**
+     * @param createIndividual
+     *  A function that takes no arguments and creates an individual.
+     *  I.e. an instance of [INDIVIDUAL].
+     */
+    constructor(createIndividual: () -> INDIVIDUAL): this(createIndividual, listOf())
 
     private val cloner = Cloner()
 
