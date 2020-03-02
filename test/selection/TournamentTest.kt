@@ -1,6 +1,9 @@
 package selection
 
 import exceptions.population.NotAnIndividualException
+import exceptions.selection.InvalidTournamentSizeException
+import exceptions.selection.PopulationTooSmallException
+import exceptions.selection.SelectionTooSmallException
 import fitness.Fitness
 import individual.BaseIndividual
 import individual.Individual
@@ -20,7 +23,6 @@ class TournamentTest {
 
         @JvmStatic
         fun popSizeValueProvider(): Stream<Arguments> = Stream.of(
-            Arguments.of(0),
             Arguments.of(1),
             Arguments.of(10),
             Arguments.of(100)
@@ -31,7 +33,7 @@ class TournamentTest {
     }
 
     @Test
-    fun `initialize small tourn size`() { Tournament<MyIndividual>(1) }
+    fun `initialize small tourn size`() { assertThrows<InvalidTournamentSizeException> { Tournament<MyIndividual>(1) } }
 
     @Test
     fun `initialize ok tourn size`() { Tournament<MyIndividual>(3) }
@@ -43,5 +45,21 @@ class TournamentTest {
         pop.forEach { it.fitness.value = Random.nextDouble() }
         val select = Tournament<MyIndividual>(3)
         assertEquals(select(pop, size).size, size)
+    }
+
+    @Test
+    fun `select 0`() {
+        val pop = PopulationFactory { MyIndividual() }.spawn(1000)
+        pop.forEach { it.fitness.value = Random.nextDouble() }
+        val select = Tournament<MyIndividual>(3)
+        assertThrows<SelectionTooSmallException> { select(pop, 0) }
+    }
+
+    @Test
+    fun `select from small pop`() {
+        val pop = PopulationFactory { MyIndividual() }.spawn(3)
+        pop.forEach { it.fitness.value = Random.nextDouble() }
+        val select = Tournament<MyIndividual>(5)
+        assertThrows<PopulationTooSmallException> { select(pop, 1) }
     }
 }
