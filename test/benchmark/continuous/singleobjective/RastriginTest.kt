@@ -1,4 +1,4 @@
-package benchmark
+package benchmark.continuous.singleobjective
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -7,7 +7,7 @@ import java.util.stream.Stream
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
-class ClassicTest {
+class RastriginTest {
 
     companion object {
 
@@ -23,5 +23,5 @@ class ClassicTest {
 
     @ParameterizedTest
     @MethodSource("rastriginValueProvider")
-    fun `value initialized`(x: List<Double>, resultIsZero: Boolean) = assertEquals(rastrigin(x) == 0.0, resultIsZero)
+    fun `value initialized`(x: List<Double>, resultIsZero: Boolean) = assertEquals(Rastrigin()(x) == 0.0, resultIsZero)
 }

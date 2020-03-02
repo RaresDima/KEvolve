@@ -1,4 +1,5 @@
-import benchmark.rastrigin
+import benchmark.continuous.rastrigin
+import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
 import population.PopulationFactory
 import utils.BinaryRepresentation
@@ -22,7 +23,7 @@ fun main(args: Array<String>) {
 
     // Fitness
 
-    val fitness = ::rastrigin
+    val fitness = Rastrigin()
 
     // Individual and Population
 
