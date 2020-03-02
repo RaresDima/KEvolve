@@ -52,4 +52,10 @@ class MultiObjectiveFitness(val weights: List<Double>): BaseFitness() {
      * objective values.
      */
     override fun value(): Double = weightedValue()
+
+    override fun copy(): MultiObjectiveFitness =
+        MultiObjectiveFitness(weights).also {
+            it.values  = this._values
+            it.valid = this.valid
+        }
 }

@@ -6,7 +6,6 @@ import fitness.Fitness
 import individual.BaseIndividual
 import individual.Individual
 import individual.MultiObjectiveIndividual
-import java.lang.IllegalStateException
 
 /**
  * Handles instantiation of individuals to be used in single-objective
@@ -30,9 +29,9 @@ import java.lang.IllegalStateException
  *  Stores the function (passed as a parameter) that will be used to instantiate
  *  the individuals.
  */
-class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(
+class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
     val createIndividual: () -> INDIVIDUAL,
-    val weights: List<Double> = listOf()
+    val weights: List<Double> = listOf(1.0)
 ) {
 
     /**
@@ -49,7 +48,27 @@ class PopulationFactory<out INDIVIDUAL: BaseIndividual<*>>(
             createIndividual().apply {
                 when (this) {
                     is Individual -> fitness = Fitness()
-                    is MultiObjectiveIndividual -> fitness = MultiObjectiveFitness(listOf(1.0))
+                    is MultiObjectiveIndividual -> fitness = MultiObjectiveFitness(weights)
+                    else -> throw NotAnIndividualException("$this does not inherit from an individual.")
+                }
+            }
+        }
+
+    /**
+     * Spawns (instantiates) the specified number of individuals.
+     *
+     * @param n The number of individuals to create.
+     *
+     * @return A [List] with the created individuals.
+     *
+     * @throws NotAnIndividualException If [INDIVIDUAL] does not inherit an Individual class.
+     */
+    fun clone(pop: List<INDIVIDUAL>): List<INDIVIDUAL> =
+        List(n) {
+            createIndividual().apply {
+                when (this) {
+                    is Individual -> fitness = Fitness()
+                    is MultiObjectiveIndividual -> fitness = MultiObjectiveFitness(weights)
                     else -> throw NotAnIndividualException("$this does not inherit from an individual.")
                 }
             }

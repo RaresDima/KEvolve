@@ -13,4 +13,11 @@ class Fitness: BaseFitness() {
         }
 
     override fun value(): Double = value
+
+    override fun copy(): Fitness =
+        Fitness().also {
+            it.value = this.value
+            it.valid = this.valid
+        }
+
 }

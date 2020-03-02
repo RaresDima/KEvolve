@@ -58,4 +58,10 @@ abstract class BaseFitness {
         else
             throw IllegalArgumentException("Can only compare to another class derived from BaseFitness.")
 
+    /**
+     * Returns a copy of this Fitness object.
+     *
+     * @return A copy of this fitness object.
+     */
+    abstract fun copy(): BaseFitness
 }
