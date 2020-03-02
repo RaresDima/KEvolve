@@ -1,6 +1,5 @@
 package selection
 
-import exceptions.selection.InvalidTournamentSizeException
 import exceptions.selection.PopulationTooSmallException
 import exceptions.selection.SelectionTooSmallException
 import extensions.randomSequence
@@ -9,7 +8,7 @@ import individual.BaseIndividual
 /**
  * Selects k random individuals in the population.
  */
-class SelectRandom<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
+class SelectRandomNoReplacement<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
 
     /**
      * Selects [k] random individuals in the [pop].
