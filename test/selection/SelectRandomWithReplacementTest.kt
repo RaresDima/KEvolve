@@ -13,7 +13,7 @@ import java.util.stream.Stream
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
-class SelectRandomWithoutReplacementTest {
+class SelectRandomWithReplacementTest {
 
     companion object {
 
@@ -29,14 +29,14 @@ class SelectRandomWithoutReplacementTest {
     }
 
     @Test
-    fun initialize() { SelectRandomWithoutReplacement<MyIndividual>() }
+    fun initialize() { SelectRandomWithReplacement<MyIndividual>() }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRandomWithoutReplacement<MyIndividual>()
+        val select = SelectRandomWithReplacement<MyIndividual>()
         assertEquals(select(pop, size).size, size)
     }
 
@@ -44,7 +44,7 @@ class SelectRandomWithoutReplacementTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRandomWithoutReplacement<MyIndividual>()
+        val select = SelectRandomWithReplacement<MyIndividual>()
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -52,7 +52,7 @@ class SelectRandomWithoutReplacementTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRandomWithoutReplacement<MyIndividual>()
-        assertThrows<PopulationTooSmallException> { select(pop, 5) }
+        val select = SelectRandomWithReplacement<MyIndividual>()
+        assertEquals(select(pop, 5).size, 5)
     }
 }
