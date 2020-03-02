@@ -7,7 +7,7 @@ import extensions.randomSequence
 import individual.BaseIndividual
 
 /**
- * SelectTournament Selection selects the best individual from a small pool of randomly
+ * Tournament Selection selects the best individual from a small pool of randomly
  * chosen [tournSize] individuals.
  *
  * This repeats k times (until the desired number of individuals are selected).
@@ -30,7 +30,7 @@ class SelectTournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseS
     }
 
     /**
-     * SelectTournament Selection selects the best individual from a small pool of randomly
+     * Tournament Selection selects the best individual from a small pool of randomly
      * chosen [tournSize] individuals.
      *
      * This repeats [k] times (until the desired number of individuals are selected).
@@ -48,7 +48,7 @@ class SelectTournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseS
     override operator fun invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.size < tournSize)
-            throw PopulationTooSmallException("pop size = ${pop.size} | tournSize = $tournSize")
+            throw PopulationTooSmallException("pop size = ${pop.size} < tournSize = $tournSize")
 
         if (k < 1)
             throw SelectionTooSmallException("k = $k < 1")
