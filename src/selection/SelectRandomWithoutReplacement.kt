@@ -6,12 +6,12 @@ import extensions.randomSequence
 import individual.BaseIndividual
 
 /**
- * Selects k random individuals in the population.
+ * Selects k random individuals in the population without replacement.
  */
-class SelectRandomNoReplacement<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
+class SelectRandomWithoutReplacement<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
 
     /**
-     * Selects [k] random individuals in the [pop].
+     * Selects [k] random individuals in the [pop] without replacement.
      *
      * @param pop The population to select from.
      * @param k The number of individuals to select.

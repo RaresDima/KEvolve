@@ -13,7 +13,7 @@ import java.util.stream.Stream
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
-class SelectRandomNoReplacementTest {
+class SelectRandomWithoutReplacementTest {
 
     companion object {
 
@@ -36,7 +36,7 @@ class SelectRandomNoReplacementTest {
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRandomNoReplacement<MyIndividual>()
+        val select = SelectRandomWithoutReplacement<MyIndividual>()
         assertEquals(select(pop, size).size, size)
     }
 
@@ -44,7 +44,7 @@ class SelectRandomNoReplacementTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRandomNoReplacement<MyIndividual>()
+        val select = SelectRandomWithoutReplacement<MyIndividual>()
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -52,7 +52,7 @@ class SelectRandomNoReplacementTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRandomNoReplacement<MyIndividual>()
+        val select = SelectRandomWithoutReplacement<MyIndividual>()
         assertThrows<PopulationTooSmallException> { select(pop, 5) }
     }
 }
