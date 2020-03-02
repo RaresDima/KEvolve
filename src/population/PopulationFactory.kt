@@ -33,8 +33,8 @@ import individual.MultiObjectiveIndividual
  *  the individuals.
  */
 class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
-    val createIndividual: () -> INDIVIDUAL,
-    val weights: List<Double>
+    val weights: List<Double>,
+    val createIndividual: () -> INDIVIDUAL
 ) {
 
     /**
@@ -42,7 +42,7 @@ class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
      *  A function that takes no arguments and creates an individual.
      *  I.e. an instance of [INDIVIDUAL].
      */
-    constructor(createIndividual: () -> INDIVIDUAL): this(createIndividual, listOf())
+    constructor(createIndividual: () -> INDIVIDUAL): this(listOf(), createIndividual)
 
     private val cloner = Cloner()
 

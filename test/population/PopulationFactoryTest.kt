@@ -36,7 +36,7 @@ class PopulationFactoryTest {
     fun `initialize 1 single-objective`() { PopulationFactory { MyIndividual() }.spawn() }
 
     @Test
-    fun `initialize 1 multi-objective`() { PopulationFactory { MyMultiObjectiveIndividual() }.spawn() }
+    fun `initialize 1 multi-objective`() { PopulationFactory(listOf(1.0)) { MyMultiObjectiveIndividual() }.spawn() }
 
     @Test
     fun `initialize 1 non_individual`() = assertThrows<NotAnIndividualException> { PopulationFactory(::MyNotAnIndividual).spawn() }
@@ -48,7 +48,7 @@ class PopulationFactoryTest {
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
-    fun `initialize n multi-objective`(size: Int) = assertEquals(PopulationFactory { MyMultiObjectiveIndividual() }.spawn(size).size, size)
+    fun `initialize n multi-objective`(size: Int) = assertEquals(PopulationFactory(listOf(1.0)) { MyMultiObjectiveIndividual() }.spawn(size).size, size)
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
@@ -94,7 +94,7 @@ class PopulationFactoryTest {
 
     @Test
     fun `clone 1 multi-objective contents equal`() {
-        val pf = PopulationFactory { MyMultiObjectiveIndividual() }
+        val pf = PopulationFactory(listOf(1.0)) { MyMultiObjectiveIndividual() }
         val ind = pf.spawn()
         val clone = pf.clone(ind)
         assertEquals(ind.l, clone.l)
@@ -102,7 +102,7 @@ class PopulationFactoryTest {
 
     @Test
     fun `clone 1 multi-objective objects different`() {
-        val pf = PopulationFactory { MyMultiObjectiveIndividual() }
+        val pf = PopulationFactory(listOf(1.0)) { MyMultiObjectiveIndividual() }
         val ind = pf.spawn()
         val clone = pf.clone(ind)
         assert(ind !== clone)
@@ -112,7 +112,7 @@ class PopulationFactoryTest {
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `clone n multi-objective contents equal`(size: Int) {
-        val pf = PopulationFactory { MyMultiObjectiveIndividual() }
+        val pf = PopulationFactory(listOf(1.0)) { MyMultiObjectiveIndividual() }
         val pop = pf.spawn(size)
         val popClone = pf.clone(pop)
         pop.zip(popClone).forEach { (ind, clone) -> assertEquals(ind.l, clone.l) }
@@ -121,7 +121,7 @@ class PopulationFactoryTest {
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `clone n multi-objective objects different`(size: Int) {
-        val pf = PopulationFactory { MyMultiObjectiveIndividual() }
+        val pf = PopulationFactory(listOf(1.0)) { MyMultiObjectiveIndividual() }
         val pop = pf.spawn(size)
         val popClone = pf.clone(pop)
         pop.zip(popClone).forEach { (ind, clone) -> assert(ind.l !== clone.l) }
