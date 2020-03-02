@@ -11,7 +11,6 @@ import individual.BaseIndividual
  */
 class SelectBest<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
 
-
     /**
      * Selects the best [k] individuals in the [pop].
      *

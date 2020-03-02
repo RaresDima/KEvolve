@@ -11,7 +11,6 @@ import individual.BaseIndividual
  */
 class SelectWorst<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
 
-
     /**
      * Selects the worst [k] individuals in the [pop].
      *
