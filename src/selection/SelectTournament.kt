@@ -12,6 +12,8 @@ import individual.BaseIndividual
  *
  * This repeats k times (until the desired number of individuals are selected).
  *
+ * Selecting the same individual multiple times is possible.
+ *
  * @property tournSize The size of each tournament pool.
  *
  * @constructor
@@ -34,6 +36,8 @@ class SelectTournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseS
      * chosen [tournSize] individuals.
      *
      * This repeats [k] times (until the desired number of individuals are selected).
+     *
+     * Selecting the same individual multiple times is possible.
      *
      * @param pop The population to select from.
      * @param k The number of individuals to select.

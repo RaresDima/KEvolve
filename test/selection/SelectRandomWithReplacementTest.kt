@@ -49,6 +49,14 @@ class SelectRandomWithReplacementTest {
     }
 
     @Test
+    fun `select from empty`() {
+        val pop = PopulationFactory { MyIndividual() }.spawn(0)
+        pop.forEach { it.fitness.value = Random.nextDouble() }
+        val select = SelectRandomWithReplacement<MyIndividual>()
+        assertThrows<PopulationTooSmallException> { select(pop, 10) }
+    }
+
+    @Test
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }

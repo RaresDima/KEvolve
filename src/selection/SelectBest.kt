@@ -8,11 +8,15 @@ import individual.BaseIndividual
 
 /**
  * Selects the best k individuals in the population.
+ *
+ * Selecting the same individual multiple times is not possible.
  */
 class SelectBest<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
 
     /**
      * Selects the best [k] individuals in the [pop].
+     *
+     * Selecting the same individual multiple times is not possible.
      *
      * @param pop The population to select from.
      * @param k The number of individuals to select.
