@@ -1,9 +1,8 @@
 package exceptions.selection
 
-import population.PopulationFactory
+import selection.Tournament
 
 /**
- * Thrown when a [PopulationFactory] tries to [PopulationFactory.spawn] an
- * instance that does not derive from an Individual class.
+ * Thrown when a [Tournament] has tournSize < 1.
  */
 class InvalidTournamentSizeException(msg: String): Exception(msg)

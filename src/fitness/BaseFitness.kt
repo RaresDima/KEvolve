@@ -68,4 +68,6 @@ abstract class BaseFitness {
      * @return A copy of this fitness object.
      */
     abstract fun copy(): BaseFitness
+
+
 }
