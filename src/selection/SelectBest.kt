@@ -33,11 +33,6 @@ class SelectBest<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
         if (k < 1)
             throw SelectionTooSmallException("k = $k < 1")
 
-        return List(k) {
-            (0..pop.lastIndex)
-                .randomSequence()
-                .map { pop[it] }
-                .maxBy { it.fitness.value() }!!
-        }
+        return pop.sortedBy { it.fitness.value() }.takeLast(k)
     }
 }
