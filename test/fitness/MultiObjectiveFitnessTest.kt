@@ -119,20 +119,20 @@ internal class MultiObjectiveFitnessTest {
     }
 
 
-//    @ParameterizedTest
-//    @MethodSource("fitnessValueProvider")
-//    fun `copy produces same value`(f: Double) {
-//        val fit = Fitness()
-//        fit.value = f
-//        assert(fit == fit.copy())
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("fitnessValueProvider")
-//    fun `copy produces different object`(f: Double) {
-//        val fit = Fitness()
-//        fit.value = f
-//        assert(fit !== fit.copy())
-//    }
+    @ParameterizedTest
+    @MethodSource("ctorWeightsAndValuesProvider")
+    fun `copy produces same value`(wv: List<Double>) {
+        val fit = MultiObjectiveFitness(wv)
+        fit.values = wv
+        assert(fit == fit.copy())
+    }
+
+    @ParameterizedTest
+    @MethodSource("ctorWeightsAndValuesProvider")
+    fun `copy produces different object`(wv: List<Double>) {
+        val fit = MultiObjectiveFitness(wv)
+        fit.values = wv
+        assert(fit !== fit.copy())
+    }
 
 }
