@@ -7,14 +7,18 @@ import utils.Bit
 
 fun main(args: Array<String>) {
 
-    val dims = 3
+    // Params
+
+    val MIN = -5.12
+    val MAX = +5.12
+    val DIGITS = 3
+
+    val DIMS = 3
+    val POP_SIZE = 100
 
     // Single number representation
 
-    val min = -5.12
-    val max = +5.12
-    val digits = 3
-    val repr = BinaryRepresentation(min, max, digits)
+    val repr = BinaryRepresentation(MIN, MAX, DIGITS)
 
     // Fitness
 
@@ -25,9 +29,11 @@ fun main(args: Array<String>) {
     class RastriginIndividual(val bits: List<Bit>): Individual()
     val popFactory = PopulationFactory {
         RastriginIndividual(
-            List(dims * repr.nBits) { Bit.random() }
+            List(DIMS * repr.nBits) { Bit.random() }
         )
     }
+
+    var pop = popFactory.spawn(POP_SIZE)
 
     // Selection
 
