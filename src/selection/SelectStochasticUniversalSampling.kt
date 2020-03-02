@@ -61,22 +61,19 @@ class SelectStochasticUniversalSampling<INDIVIDUAL: BaseIndividual<*>>(): BaseSe
         // Fitness Sum and CumSum
 
         var fitnessSum = pop[0].fitness.value()
-        val fitnessCumSum = MutableList(pop.size) { 0.0 }
+        val fitnessCumSum = MutableList(pop.size + 1) { 0.0 }
 
-        fitnessCumSum[0] = fitnessSum
+        fitnessCumSum[1] = fitnessSum
 
         for (i in 1..pop.lastIndex) {
             fitnessSum += pop[i].fitness.value()
-            fitnessCumSum[i] = fitnessSum
+            fitnessCumSum[i+1] = fitnessSum
         }
-
-        for (i in 0..pop.lastIndex)
-            fitnessCumSum[i] /= fitnessSum
 
         // Pointers
 
         val nPointers = k
-        val pointerDist = 1.0 / nPointers.toDouble()
+        val pointerDist = fitnessSum / nPointers.toDouble()
         val startPos = Random.nextDouble(pointerDist)
 
         // Select
@@ -84,7 +81,7 @@ class SelectStochasticUniversalSampling<INDIVIDUAL: BaseIndividual<*>>(): BaseSe
         var pointerPos = startPos
         val selected = MutableList(k) { pop[0] }
         for (i in 0..(k-1)) {
-            val selectedIndex = (0..fitnessCumSum.lastIndex).find { pointerPos > fitnessCumSum[it] }!! - 1
+            val selectedIndex = (0..fitnessCumSum.lastIndex).find { pointerPos <= fitnessCumSum[it] }!! - 1
             selected[i] = pop[selectedIndex]
             pointerPos += pointerDist
         }

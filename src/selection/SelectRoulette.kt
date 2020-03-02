@@ -59,24 +59,21 @@ class SelectRoulette<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>
         // Fitness Sum and CumSum
 
         var fitnessSum = pop[0].fitness.value()
-        val fitnessCumSum = MutableList(pop.size) { 0.0 }
+        val fitnessCumSum = MutableList(pop.size + 1) { 0.0 }
 
-        fitnessCumSum[0] = fitnessSum
+        fitnessCumSum[1] = fitnessSum
 
         for (i in 1..pop.lastIndex) {
             fitnessSum += pop[i].fitness.value()
-            fitnessCumSum[i] = fitnessSum
+            fitnessCumSum[i+1] = fitnessSum
         }
-
-        for (i in 0..pop.lastIndex)
-            fitnessCumSum[i] /= fitnessSum
 
         // Select
 
         val selected = MutableList(k) { pop[0] }
         for (i in 0..(k-1)) {
-            val rand = Random.nextDouble(1.0)
-            val selectedIndex = (0..fitnessCumSum.lastIndex).find { rand > fitnessCumSum[it] }!! - 1
+            val rand = Random.nextDouble(fitnessSum)
+            val selectedIndex = (0..fitnessCumSum.lastIndex).find { rand <= fitnessCumSum[it] }!! - 1
             selected[i] = pop[selectedIndex]
         }
 
