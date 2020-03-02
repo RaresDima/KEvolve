@@ -1,12 +1,16 @@
 package utils
 
 import extensions.toInt
+import kotlin.random.Random
 
 class Bit(value: Number) {
     constructor(value: Boolean): this(value.toInt())
 
     var value: Int = (value.toDouble() != 0.0).toInt()
 
+    companion object {
+        fun random() = Bit(Random.nextBoolean())
+    }
 
     fun flip(): Bit { value = 1 - value ; return this }
     fun flipCopy(): Bit = Bit(1 - value)
