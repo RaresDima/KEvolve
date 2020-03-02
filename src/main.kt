@@ -1,6 +1,7 @@
 import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
 import population.PopulationFactory
+import selection.SelectTournament
 import utils.BinaryRepresentation
 import utils.Bit
 
@@ -15,6 +16,8 @@ fun main(args: Array<String>) {
 
     val DIMS = 3
     val POP_SIZE = 100
+
+    val TOURN_SIZE = 3
 
     // Single number representation
 
@@ -37,7 +40,7 @@ fun main(args: Array<String>) {
 
     // Selection
 
-//    val select = Tournament(3)
+    val select = SelectTournament<RastriginIndividual>(TOURN_SIZE)
 
     // Crossover
 

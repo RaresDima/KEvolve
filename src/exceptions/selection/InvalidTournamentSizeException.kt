@@ -1,8 +1,8 @@
 package exceptions.selection
 
-import selection.Tournament
+import selection.SelectTournament
 
 /**
- * Thrown when a [Tournament] has tournSize < 1.
+ * Thrown when a [SelectTournament] has tournSize < 1.
  */
 class InvalidTournamentSizeException(msg: String): Exception(msg)

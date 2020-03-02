@@ -7,7 +7,7 @@ import extensions.randomSequence
 import individual.BaseIndividual
 
 /**
- * Tournament Selection selects the best individual from a small pool of randomly
+ * SelectTournament Selection selects the best individual from a small pool of randomly
  * chosen [tournSize] individuals.
  *
  * This repeats k times (until the desired number of individuals are selected).
@@ -22,7 +22,7 @@ import individual.BaseIndividual
  * able to choose from (no point in choosing from a tournament of 1 individual) or
  * have a size of 0 or less.
  */
-class Tournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseSelection<INDIVIDUAL>() {
+class SelectBest<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseSelection<INDIVIDUAL>() {
 
     init {
         if (tournSize < 2)
@@ -30,7 +30,7 @@ class Tournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseSelecti
     }
 
     /**
-     * Tournament Selection selects the best individual from a small pool of randomly
+     * SelectTournament Selection selects the best individual from a small pool of randomly
      * chosen [tournSize] individuals.
      *
      * This repeats [k] times (until the desired number of individuals are selected).

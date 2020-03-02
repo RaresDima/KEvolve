@@ -1,11 +1,8 @@
 package selection
 
-import exceptions.population.NotAnIndividualException
 import exceptions.selection.InvalidTournamentSizeException
 import exceptions.selection.PopulationTooSmallException
 import exceptions.selection.SelectionTooSmallException
-import fitness.Fitness
-import individual.BaseIndividual
 import individual.Individual
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -17,7 +14,7 @@ import java.util.stream.Stream
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
-class TournamentTest {
+class SelectTournamentTest {
 
     companion object {
 
@@ -33,17 +30,17 @@ class TournamentTest {
     }
 
     @Test
-    fun `initialize small tourn size`() { assertThrows<InvalidTournamentSizeException> { Tournament<MyIndividual>(1) } }
+    fun `initialize small tourn size`() { assertThrows<InvalidTournamentSizeException> { SelectTournament<MyIndividual>(1) } }
 
     @Test
-    fun `initialize ok tourn size`() { Tournament<MyIndividual>(3) }
+    fun `initialize ok tourn size`() { SelectTournament<MyIndividual>(3) }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = Tournament<MyIndividual>(3)
+        val select = SelectTournament<MyIndividual>(3)
         assertEquals(select(pop, size).size, size)
     }
 
@@ -51,7 +48,7 @@ class TournamentTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = Tournament<MyIndividual>(3)
+        val select = SelectTournament<MyIndividual>(3)
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -59,7 +56,7 @@ class TournamentTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = Tournament<MyIndividual>(5)
+        val select = SelectTournament<MyIndividual>(5)
         assertThrows<PopulationTooSmallException> { select(pop, 1) }
     }
 }
