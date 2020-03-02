@@ -65,16 +65,20 @@ class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
     fun spawn(n: Int): List<INDIVIDUAL> = List(n) { spawn() }
 
     /**
+     * Clones (deep copies) an individual.
+     *
+     * @param ind The individual to clone.
+     *
+     * @return The cloned individual.
+     */
+    fun clone(ind: INDIVIDUAL): INDIVIDUAL = cloner.deepClone(ind)
+
+    /**
      * Clones (deep copies) the provided individuals.
      *
      * @param inds The individuals to clone.
      *
-     * @return A [List] with the cloned individuals.
-     *
-     * @throws NotAnIndividualException If [INDIVIDUAL] does not inherit an Individual class.
+     * @return A [List] with cloned individuals.
      */
-    fun clone(inds: List<INDIVIDUAL>): List<INDIVIDUAL> =
-        inds.map {
-            cloner.deepClone()
-        }
+    fun clone(inds: List<INDIVIDUAL>): List<INDIVIDUAL> = inds.map { clone(it) }
 }
