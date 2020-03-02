@@ -63,7 +63,7 @@ class SelectTournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseS
                 .distinct()
                 .take(tournSize)
                 .map { pop[it] }
-                .maxBy { it.fitness.value() }!!
+                .maxBy { it.fitness }!!
         }
     }
 }

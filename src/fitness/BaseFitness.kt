@@ -11,7 +11,7 @@ import kotlin.math.sign
  *  Whether this Fitness object contains a valid fitness value or the
  *  individual that owns this Fitness needs to be evaluated again.
  */
-abstract class BaseFitness {
+abstract class BaseFitness: Comparable<BaseFitness> {
     var valid: Boolean = false
 
     /**
@@ -36,7 +36,7 @@ abstract class BaseFitness {
      *
      * @throws IllegalArgumentException If [other] is not derived from [BaseFitness].
      */
-    override operator fun equals(other: Any?): Boolean =
+    override fun equals(other: Any?): Boolean =
         if (other is BaseFitness)
             this.value() == other.value()
         else
@@ -54,13 +54,10 @@ abstract class BaseFitness {
      *
      *  @throws IllegalArgumentException If [other] is not derived from [BaseFitness].
      */
-    operator fun compareTo(other: Any?): Int =
-        if (other is BaseFitness)
-            this.value().minus(other.value())
-                .let { if (it.isNaN()) 0.0 else it }
-                .sign.toInt()
-        else
-            throw IllegalArgumentException("Can only compare to another class derived from BaseFitness.")
+    override fun compareTo(other: BaseFitness): Int =
+        this.value().minus(other.value())
+            .let { if (it.isNaN()) 0.0 else it }
+            .sign.toInt()
 
     /**
      * Returns a copy of this Fitness object.

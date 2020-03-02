@@ -36,6 +36,6 @@ class SelectWorst<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() 
         if (k < 1)
             throw SelectionTooSmallException("k = $k < 1")
 
-        return pop.sortedBy { it.fitness.value() }.take(k)
+        return pop.sortedBy { it.fitness }.take(k)
     }
 }
