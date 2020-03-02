@@ -31,8 +31,8 @@ import kotlin.math.pow
  * @param max The upper bound of the domain.
  * @param digits How many digits after the decimal point should be represented.
  *
- * @throws InvalidDomainBoundsException if [min] >= [max]
- * @throws InvalidPrecisionException if [digits] < 0
+ * @throws InvalidDomainBoundsException If [min] >= [max]
+ * @throws InvalidPrecisionException If [digits] < 0
  */
 class BinaryRepresentation(
     val min: Double,

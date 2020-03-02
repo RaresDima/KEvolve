@@ -1,8 +1,14 @@
 package selection
 
+import exceptions.selection.InvalidTournamentSizeException
+
 class Tournament(val tournSize: Int) {
+
     init {
-        check(tournSize > 1)
+        if (tournSize < 1)
+            throw InvalidTournamentSizeException("tournSize = $tournSize < 1")
     }
+
+
 
 }
