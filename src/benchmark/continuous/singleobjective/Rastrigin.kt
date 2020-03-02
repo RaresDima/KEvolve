@@ -14,7 +14,7 @@ import kotlin.math.cos
  *
  * @return The value of the Rastrigin function R(x).
  */
-class Rastrigin {
+class Rastrigin: BaseContinuousSingleObjectiveFitnessFunction() {
     companion object {
         const val A = 10
     }
@@ -30,7 +30,7 @@ class Rastrigin {
      *
      * @return The value of the Rastrigin function R(x).
      */
-    operator fun invoke(x: List<Double>): Double {
+    override operator fun invoke(x: List<Double>): Double {
         val n = x.size
         return A * n + x.sumByDouble { xi -> xi * xi - A * cos(2 * PI * xi) }
     }

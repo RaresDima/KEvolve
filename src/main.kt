@@ -1,4 +1,3 @@
-import benchmark.continuous.rastrigin
 import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
 import population.PopulationFactory
@@ -37,6 +36,8 @@ fun main(args: Array<String>) {
     var pop = popFactory.spawn(POP_SIZE)
 
     // Selection
+
+    val select = Tournament(3)
 
     // Crossover
 

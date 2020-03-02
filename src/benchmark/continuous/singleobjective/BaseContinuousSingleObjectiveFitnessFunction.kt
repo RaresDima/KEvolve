@@ -1,7 +1,5 @@
 package benchmark.continuous.singleobjective
 
-import benchmark.BaseFitnessFunction
-
-abstract class BaseContinuousSingleObjectiveFitnessFunction: BaseFitnessFunction() {
-    abstract override operator fun invoke(): Double
+abstract class BaseContinuousSingleObjectiveFitnessFunction() {
+    abstract fun invoke(x: List<Double>): Double
 }

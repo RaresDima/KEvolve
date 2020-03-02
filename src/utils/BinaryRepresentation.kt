@@ -30,6 +30,11 @@ class BinaryRepresentation(
     val max: Double,
     val digits: Int) {
 
+    init {
+        check(min < max)
+        check(digits >= 0)
+    }
+
     val precision: Double = 10.0.pow(-digits)
     val domainSize: Double = max - min
     val nIntervals: Double = domainSize * precision
