@@ -33,6 +33,8 @@ abstract class BaseFitness {
      * @param other The Fitness object to compare this to.
      *
      * @return Whether the 2 Fitness objects have the same value.
+     *
+     * @throws IllegalArgumentException if [other] is not derived from [BaseFitness].
      */
     override operator fun equals(other: Any?): Boolean =
         if (other is BaseFitness)
@@ -49,6 +51,8 @@ abstract class BaseFitness {
      *  - 1  if this Fitness is greater than [other].
      *  - -1 if this Fitness is lower than [other].
      *  - 0 if this and [other] are equal.
+     *
+     *  @throws IllegalArgumentException if [other] is not derived from [BaseFitness].
      */
     operator fun compareTo(other: Any?): Int =
         if (other is BaseFitness)
