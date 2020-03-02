@@ -8,34 +8,36 @@ import individual.BaseIndividual
 import kotlin.random.Random
 
 /**
- * Selects k individuals using k spins of a roulette.
+ * Selects k individuals using SUS.
  *
  * The selection is made from a weighted probability distribution.
  *
  * First, the sum of all the fitness scores in the population is computed.
  *
- * The fraction that an individual contributed to this total fitness is its chance
- * to be selected.
+ * On an axis between 0 and 1 each individual gets a segment.
+ * The size of each segment is a fraction of 1.0 equal to the contribution of the
+ * corresponding individual to the total fitness.
  *
  * E.g. If individual X's fitness represents 3% of the total population's fitness
- * then X has a 3% chance of being selected.
+ * then X has a segment that represents 3% of the total size of the axis.
  *
  * Selecting the same individual multiple times is possible.
  */
-class SelectRoulette<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
+class SelectStochasticUniversalSampling<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
 
     /**
-     * Selects [k] individuals using [k] spins of a roulette.
+     * Selects [k] individuals using SUS.
      *
      * The selection is made from a weighted probability distribution.
      *
-     * The sum of all the fitness scores in the population is computed.
+     * First, the sum of all the fitness scores in the population is computed.
      *
-     * The fraction that an individual contributed to this total fitness is its chance
-     * to be selected.
+     * On an axis between 0 and 1 each individual gets a segment.
+     * The size of each segment is a fraction of 1.0 equal to the contribution of the
+     * corresponding individual to the total fitness.
      *
      * E.g. If individual X's fitness represents 3% of the total population's fitness
-     * then X has a 3% chance of being selected.
+     * then X has a segment that represents 3% of the total size of the axis.
      *
      * Selecting the same individual multiple times is possible.
      *
@@ -71,13 +73,20 @@ class SelectRoulette<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>
         for (i in 0..pop.lastIndex)
             fitnessCumSum[i] /= fitnessSum
 
+        // Pointers
+
+        val nPointers = k
+        val pointerDist = 1.0 / nPointers.toDouble()
+        val startPos = Random.nextDouble(pointerDist)
+
         // Select
 
+        var pointerPos = startPos
         val selected = MutableList(k) { pop[0] }
         for (i in 0..(k-1)) {
-            val rand = Random.nextDouble(1.0)
-            val selectedIndex = (0..fitnessCumSum.lastIndex).find { rand > fitnessCumSum[it] }!! - 1
+            val selectedIndex = (0..fitnessCumSum.lastIndex).find { pointerPos > fitnessCumSum[it] }!! - 1
             selected[i] = pop[selectedIndex]
+            pointerPos += pointerDist
         }
 
         return selected
