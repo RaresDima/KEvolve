@@ -1,5 +1,7 @@
 package utils
 
+import exceptions.utils.InvalidDomainBoundsException
+import exceptions.utils.InvalidPrecisionException
 import kotlin.math.ceil
 import kotlin.math.log2
 import kotlin.math.pow
@@ -24,15 +26,17 @@ import kotlin.math.pow
  * @property nIntervals The number of subintervals the domain is split into.
  * @property nBits The number of bits needed to represent a value.
  */
-// TODO: Tests.
 class BinaryRepresentation(
     val min: Double,
     val max: Double,
     val digits: Int) {
 
     init {
-        check(min < max)
-        check(digits >= 0)
+        if (min >= max)
+            throw InvalidDomainBoundsException("min = $min | max = $max | min >= max")
+
+        if (digits < 0)
+            throw InvalidPrecisionException("digits = $digits | digits < 0")
     }
 
     val precision: Double = 10.0.pow(-digits)

@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
 
     // Params
 
-    val MIN = -5.12
+    val MIN = 2 * +5.12
     val MAX = +5.12
     val DIGITS = 3
 
@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
 
     // Selection
 
-    val select = Tournament(3)
+//    val select = Tournament(3)
 
     // Crossover
 

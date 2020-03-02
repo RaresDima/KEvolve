@@ -1,12 +1,9 @@
 package utils
 
+import exceptions.utils.InvalidDomainBoundsException
+import exceptions.utils.InvalidPrecisionException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
-import kotlin.test.assertEquals
 
 internal class BinaryRepresentationTest {
 
@@ -14,10 +11,10 @@ internal class BinaryRepresentationTest {
     fun `min lt max`() { BinaryRepresentation(1.0 , 2.0, 1) }
 
     @Test
-    fun `min eq max`() { assertThrows<IllegalStateException> { BinaryRepresentation(1.0 , 1.0, 1) } }
+    fun `min eq max`() { assertThrows<InvalidDomainBoundsException> { BinaryRepresentation(1.0 , 1.0, 1) } }
 
     @Test
-    fun `min gt max`() { assertThrows<IllegalStateException> { BinaryRepresentation(2.0 , 1.0, 1) } }
+    fun `min gt max`() { assertThrows<InvalidDomainBoundsException> { BinaryRepresentation(2.0 , 1.0, 1) } }
 
 
     @Test
@@ -27,6 +24,6 @@ internal class BinaryRepresentationTest {
     fun `digits eq 0`() { BinaryRepresentation(1.0 , 2.0, 0) }
 
     @Test
-    fun `digits lt 0`() { assertThrows<IllegalStateException> { BinaryRepresentation(1.0 , 2.0, -1) } }
+    fun `digits lt 0`() { assertThrows<InvalidPrecisionException> { BinaryRepresentation(1.0 , 2.0, -1) } }
 
 }
