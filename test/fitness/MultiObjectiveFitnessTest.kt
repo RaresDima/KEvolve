@@ -91,4 +91,48 @@ internal class MultiObjectiveFitnessTest {
         assertEquals(fit.valid, false)
     }
 
+
+    @ParameterizedTest
+    @MethodSource("ctorWeightsAndValuesProvider")
+    fun compareTo(wv: List<Double>) {
+        val fit1 = MultiObjectiveFitness(wv)
+        val fit2 = MultiObjectiveFitness(wv.map { it / 2 })
+        fit1.values = wv
+        fit2.values = wv
+        assert(fit1 > fit2)
+
+        fit1.values = fit1.values.map { it / 4 }
+        assert(fit1 < fit2)
+    }
+
+    @ParameterizedTest
+    @MethodSource("ctorWeightsAndValuesProvider")
+    fun equals(wv: List<Double>) {
+        val fit1 = MultiObjectiveFitness(wv)
+        val fit2 = MultiObjectiveFitness(wv)
+        fit1.values = wv
+        fit2.values = wv
+        assert(fit1 == fit2)
+
+        fit1.values = fit1.values.map { it / 4 }
+        assert(fit1 != fit2)
+    }
+
+
+//    @ParameterizedTest
+//    @MethodSource("fitnessValueProvider")
+//    fun `copy produces same value`(f: Double) {
+//        val fit = Fitness()
+//        fit.value = f
+//        assert(fit == fit.copy())
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("fitnessValueProvider")
+//    fun `copy produces different object`(f: Double) {
+//        val fit = Fitness()
+//        fit.value = f
+//        assert(fit !== fit.copy())
+//    }
+
 }
