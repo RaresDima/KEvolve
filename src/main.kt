@@ -8,8 +8,7 @@ import kotlin.random.Random
 
 
 
-//val offspringPairs = offspring.slice(0 until offspring.lastIndex step 2)  // (1,2), (3,4), (5,6), ...
-//    .zip(offspring.slice(1 until offspring.lastIndex step 2))
+fun <T> List<T>.pairs() = slice(0 until lastIndex step 2).zip(slice(1 until lastIndex step 2))
 
 
 fun main(args: Array<String>) {
