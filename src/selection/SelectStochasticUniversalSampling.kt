@@ -44,6 +44,8 @@ class SelectStochasticUniversalSampling: BaseSelection() {
      * @param pop The population to select from.
      * @param k The number of individuals to select.
      *
+     * @return A [List] with the selected individuals.
+     *
      * @throws PopulationTooSmallException
      * If the population is empty.
      *
