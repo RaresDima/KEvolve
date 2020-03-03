@@ -39,9 +39,12 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      *
      * Selecting the same individual multiple times is possible.
      *
-     * Use this method only if your individuals are highly customized and do not
-     * implement any predefined Individual class from KEvolve (hence the need for a
-     * user-defined method of getting the fitness). Otherwise
+     * * [getFitness] is only needed if your individuals are highly customized and do
+     * not implement any predefined Individual class from KEvolve (hence the need for
+     * a user-defined method of getting the fitness).
+     *
+     * If you are using a class that implements an Individual class then
+     * `Individual.fitness` will be used as a default way to compare fitness scores.
      *
      * @param pop The population to select from.
      * @param k The number of individuals to select.

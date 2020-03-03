@@ -51,4 +51,5 @@ class SelectBest: BaseSelection() {
 
         return pop.sortedBy { getFitness(it) }.takeLast(k)
     }
+
 }
