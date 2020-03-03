@@ -23,8 +23,7 @@ abstract class BaseSelection {
      *
      * @return A [List] with the selected individuals.
      */
-    abstract operator fun
-            <INDIVIDUAL, FITNESS: Comparable<FITNESS>>
+    abstract operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>>
             invoke(pop: List<INDIVIDUAL>,
                    k: Int,
                    getFitness: (INDIVIDUAL) -> FITNESS): List<INDIVIDUAL>
