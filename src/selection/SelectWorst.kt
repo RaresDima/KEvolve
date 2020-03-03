@@ -40,4 +40,5 @@ class SelectWorst: BaseSelection() {
 
         return pop.sortedBy { it.fitness }.take(k)
     }
+
 }
