@@ -39,8 +39,15 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      *
      * Selecting the same individual multiple times is possible.
      *
+     * Use this method only if your individuals are highly customized and do not
+     * implement any predefined Individual class from KEvolve (hence the need for a
+     * user-defined method of getting the fitness).
+     *
      * @param pop The population to select from.
      * @param k The number of individuals to select.
+     * @param getFitness
+     *  A function that takes an individual and return a comparable value (an object
+     *  that implements [Comparable]).
      *
      * @throws PopulationTooSmallException
      * If the size of the population is less than [tournSize] since that would mean
@@ -49,8 +56,7 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    @JvmName("Generic")
-    operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>> invoke(pop: List<INDIVIDUAL>, k: Int, getFitness: (INDIVIDUAL) -> FITNESS): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>> invoke(pop: List<INDIVIDUAL>, k: Int, getFitness: (INDIVIDUAL) -> FITNESS): List<INDIVIDUAL> {
 
         if (pop.size < tournSize)
             throw PopulationTooSmallException("pop size = ${pop.size} < tournSize = $tournSize")
@@ -68,21 +74,25 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
         }
     }
 
-    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
+    /**
+     * Tournament Selection selects the best individual from a small pool of randomly
+     * chosen [tournSize] individuals.
+     *
+     * This repeats [k] times (until the desired number of individuals are selected).
+     *
+     * Selecting the same individual multiple times is possible.
+     *
+     * @param pop The population to select from.
+     * @param k The number of individuals to select.
+     *
+     * @throws PopulationTooSmallException
+     * If the size of the population is less than [tournSize] since that would mean
+     * that there are not enough individuals to from a tournament.
+     *
+     * @throws SelectionTooSmallException
+     * If [k] < 1 since it makes no sense to select 0 individuals.
+     */
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> =
+        invoke(pop, k) { it.fitness }
 
-        if (pop.size < tournSize)
-            throw PopulationTooSmallException("pop size = ${pop.size} < tournSize = $tournSize")
-
-        if (k < 1)
-            throw SelectionTooSmallException("k = $k < 1")
-
-        return List(k) {
-            (0..pop.lastIndex)
-                .randomSequence()
-                .distinct()
-                .take(tournSize)
-                .map { pop[it] }
-                .maxBy { it.fitness }!!
-        }
-    }
 }
