@@ -127,4 +127,7 @@ class BinaryRepresentation(
     fun toReal(xBinary: List<Bit>): Double =
         min + binaryToDecimal(xBinary) * (domainSize / (2.0.pow(nBits) - 1))
 
+    fun splitToReal(xBinary: List<Bit>): List<Double> =
+        xBinary.chunked(nBits) { toReal(it) }
+
 }

@@ -71,7 +71,7 @@ class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
      *
      * @throws NotAnIndividualException If [INDIVIDUAL] does not inherit an Individual class.
      */
-    fun spawn(n: Int): List<INDIVIDUAL> = List(n) { spawn() }
+    fun spawn(n: Int): MutableList<INDIVIDUAL> = MutableList(n) { spawn() }
 
     /**
      * Clones (deep copies) an individual.
@@ -89,5 +89,5 @@ class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
      *
      * @return A [List] with cloned individuals.
      */
-    fun clone(inds: List<INDIVIDUAL>): List<INDIVIDUAL> = inds.map { clone(it) }
+    fun clone(inds: List<INDIVIDUAL>): MutableList<INDIVIDUAL> = inds.map { clone(it) }.toMutableList()
 }

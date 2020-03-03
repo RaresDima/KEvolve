@@ -29,11 +29,11 @@ fun main(args: Array<String>) {
 
     // Individual and Population
 
-    class RastriginIndividual(val bits: List<Bit>): Individual()
+    class RastriginIndividual(val bits: MutableList<Bit>): Individual()
 
     val popFactory = PopulationFactory {
         RastriginIndividual(
-            List(DIMS * repr.nBits) { Bit.random() }
+            MutableList(DIMS * repr.nBits) { Bit.random() }
         )
     }
 
@@ -41,14 +41,27 @@ fun main(args: Array<String>) {
 
     // Selection
 
-    val select = SelectTournament(TOURN_SIZE)
-
-    val s = select(pop, 5, RastriginIndividual::fitness)
-    println(s)
+    val select = SelectTournament(tournSize = TOURN_SIZE)
 
     // Crossover
 
+    val crossover = CrossoverOnePoint { it.bits }
+
     // Mutation
+
+    val mutate = MutateFlipBit(bitpb = 0.1)
+
+    // GA
+
+    for (ind in pop)
+        ind.fitness.value = fitness(repr.splitToReal(ind.bits))
+
+    for (g in 1..100) {
+
+        val offspring = select(pop, POP_SIZE)
+
+
+    }
 
 
 }
