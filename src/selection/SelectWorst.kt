@@ -28,6 +28,9 @@ class SelectWorst: BaseSelection() {
      *
      * @param pop The population to select from.
      * @param k The number of individuals to select.
+     * @param getFitness
+     *  A function that takes an individual and return a comparable value (an object
+     *  that implements [Comparable]).
      *
      * @throws PopulationTooSmallException
      * If the size of the population is less than [k] since that would mean that there
@@ -36,7 +39,6 @@ class SelectWorst: BaseSelection() {
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-
     override operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>>
             invoke(pop: List<INDIVIDUAL>,
                    k: Int,
