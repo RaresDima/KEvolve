@@ -13,6 +13,11 @@ import individual.BaseIndividual
  */
 class SelectWorst: BaseSelection() {
 
+    abstract operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>>
+            invoke(pop: List<INDIVIDUAL>,
+                   k: Int,
+                   getFitness: (INDIVIDUAL) -> FITNESS): List<INDIVIDUAL>
+
     /**
      * Selects the worst [k] individuals in the [pop].
      *

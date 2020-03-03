@@ -41,7 +41,7 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      *
      * Use this method only if your individuals are highly customized and do not
      * implement any predefined Individual class from KEvolve (hence the need for a
-     * user-defined method of getting the fitness).
+     * user-defined method of getting the fitness). Otherwise
      *
      * @param pop The population to select from.
      * @param k The number of individuals to select.
@@ -76,26 +76,5 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
                 .maxBy { getFitness(it) }!!
         }
     }
-
-    /**
-     * Tournament Selection selects the best individual from a small pool of randomly
-     * chosen [tournSize] individuals.
-     *
-     * This repeats [k] times (until the desired number of individuals are selected).
-     *
-     * Selecting the same individual multiple times is possible.
-     *
-     * @param pop The population to select from.
-     * @param k The number of individuals to select.
-     *
-     * @throws PopulationTooSmallException
-     * If the size of the population is less than [tournSize] since that would mean
-     * that there are not enough individuals to from a tournament.
-     *
-     * @throws SelectionTooSmallException
-     * If [k] < 1 since it makes no sense to select 0 individuals.
-     */
-    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> =
-        invoke(pop, k) { it.fitness }
 
 }
