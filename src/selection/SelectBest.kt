@@ -11,7 +11,7 @@ import individual.BaseIndividual
  *
  * Selecting the same individual multiple times is not possible.
  */
-class SelectBest<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
+class SelectBest: BaseSelection() {
 
     /**
      * Selects the best [k] individuals in the [pop].
@@ -28,7 +28,7 @@ class SelectBest<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    override operator fun invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.size < k)
             throw PopulationTooSmallException("pop size = ${pop.size} < k = $k")

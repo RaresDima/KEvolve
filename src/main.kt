@@ -29,18 +29,20 @@ fun main(args: Array<String>) {
 
     // Individual and Population
 
-    class RastriginIndividual(val bits: List<Bit>): Individual()
-    val popFactory = PopulationFactory {
-        RastriginIndividual(
-            List(DIMS * repr.nBits) { Bit.random() }
-        )
+    class RastriginIndividual(val bits: List<Bit>): Individual() {
+        constructor(): this(List(DIMS * repr.nBits) { Bit.random() })
     }
 
-    var pop = popFactory.spawn(POP_SIZE)
+    val popFactory = PopulationFactory { RastriginIndividual() }
+    val popFactoryy = PopulationFactory(::RastriginIndividual)
+
+    val pop = popFactory.spawn(POP_SIZE)
 
     // Selection
 
-    val select = SelectTournament<RastriginIndividual>(TOURN_SIZE)
+    val select = SelectTournament(TOURN_SIZE)
+
+    select(pop, 5)
 
     // Crossover
 

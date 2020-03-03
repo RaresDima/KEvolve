@@ -30,17 +30,17 @@ class SelectTournamentTest {
     }
 
     @Test
-    fun `initialize small tourn size`() { assertThrows<InvalidTournamentSizeException> { SelectTournament<MyIndividual>(1) } }
+    fun `initialize small tourn size`() { assertThrows<InvalidTournamentSizeException> { SelectTournament(1) } }
 
     @Test
-    fun `initialize ok tourn size`() { SelectTournament<MyIndividual>(3) }
+    fun `initialize ok tourn size`() { SelectTournament(3) }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectTournament<MyIndividual>(3)
+        val select = SelectTournament(3)
         assertEquals(select(pop, size).size, size)
     }
 
@@ -48,7 +48,7 @@ class SelectTournamentTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectTournament<MyIndividual>(3)
+        val select = SelectTournament(3)
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -56,7 +56,7 @@ class SelectTournamentTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectTournament<MyIndividual>(5)
+        val select = SelectTournament(5)
         assertThrows<PopulationTooSmallException> { select(pop, 1) }
     }
 }

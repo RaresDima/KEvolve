@@ -29,14 +29,14 @@ class SelectStochasticUniversalSamplingTest {
     }
 
     @Test
-    fun initialize() { SelectStochasticUniversalSampling<MyIndividual>() }
+    fun initialize() { SelectStochasticUniversalSampling() }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectStochasticUniversalSampling<MyIndividual>()
+        val select = SelectStochasticUniversalSampling()
         assertEquals(select(pop, size).size, size)
     }
 
@@ -44,7 +44,7 @@ class SelectStochasticUniversalSamplingTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectStochasticUniversalSampling<MyIndividual>()
+        val select = SelectStochasticUniversalSampling()
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -52,7 +52,7 @@ class SelectStochasticUniversalSamplingTest {
     fun `select from empty`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(0)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectStochasticUniversalSampling<MyIndividual>()
+        val select = SelectStochasticUniversalSampling()
         assertThrows<PopulationTooSmallException> { select(pop, 10) }
     }
 
@@ -60,7 +60,7 @@ class SelectStochasticUniversalSamplingTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectStochasticUniversalSampling<MyIndividual>()
+        val select = SelectStochasticUniversalSampling()
         assertEquals(select(pop, 5).size, 5)
     }
 }

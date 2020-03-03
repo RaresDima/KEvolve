@@ -29,14 +29,14 @@ class SelectWorstTest {
     }
 
     @Test
-    fun initialize() { SelectWorst<MyIndividual>() }
+    fun initialize() { SelectWorst() }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectWorst<MyIndividual>()
+        val select = SelectWorst()
         assertEquals(select(pop, size).size, size)
     }
 
@@ -44,7 +44,7 @@ class SelectWorstTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectWorst<MyIndividual>()
+        val select = SelectWorst()
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -52,7 +52,7 @@ class SelectWorstTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectWorst<MyIndividual>()
+        val select = SelectWorst()
         assertThrows<PopulationTooSmallException> { select(pop, 5) }
     }
 }

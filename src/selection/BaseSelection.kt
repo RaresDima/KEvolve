@@ -6,7 +6,7 @@ import individual.BaseIndividual
  * Base Selection class that exposes functionalities all Selection algorithms
  * should have.
  */
-abstract class BaseSelection<INDIVIDUAL: BaseIndividual<*>> {
+abstract class BaseSelection {
 
     /**
      * Select the desired number of individuals.
@@ -16,5 +16,5 @@ abstract class BaseSelection<INDIVIDUAL: BaseIndividual<*>> {
      *
      * @return A [List] with the selected individuals.
      */
-    abstract fun invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL>
+    abstract fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL>
 }

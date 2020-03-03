@@ -24,7 +24,7 @@ import individual.BaseIndividual
  * able to choose from (no point in choosing from a tournament of 1 individual) or
  * have a size of 0 or less.
  */
-class SelectTournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseSelection<INDIVIDUAL>() {
+class SelectTournament(val tournSize: Int): BaseSelection() {
 
     init {
         if (tournSize < 2)
@@ -49,7 +49,7 @@ class SelectTournament<INDIVIDUAL: BaseIndividual<*>>(val tournSize: Int): BaseS
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    override operator fun invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.size < tournSize)
             throw PopulationTooSmallException("pop size = ${pop.size} < tournSize = $tournSize")

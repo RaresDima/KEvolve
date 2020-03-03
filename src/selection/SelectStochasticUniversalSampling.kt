@@ -23,7 +23,7 @@ import kotlin.random.Random
  *
  * Selecting the same individual multiple times is possible.
  */
-class SelectStochasticUniversalSampling<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
+class SelectStochasticUniversalSampling: BaseSelection() {
 
     /**
      * Selects [k] individuals using SUS.
@@ -50,7 +50,7 @@ class SelectStochasticUniversalSampling<INDIVIDUAL: BaseIndividual<*>>(): BaseSe
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    override operator fun invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.isEmpty())
             throw PopulationTooSmallException("population size = ${pop.size} (empty)")

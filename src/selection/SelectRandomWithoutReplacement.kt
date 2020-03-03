@@ -10,7 +10,7 @@ import individual.BaseIndividual
  *
  * Selecting the same individual multiple times is not possible.
  */
-class SelectRandomWithoutReplacement<INDIVIDUAL: BaseIndividual<*>>(): BaseSelection<INDIVIDUAL>() {
+class SelectRandomWithoutReplacement: BaseSelection() {
 
     /**
      * Selects [k] random individuals in the [pop] without replacement.
@@ -27,7 +27,7 @@ class SelectRandomWithoutReplacement<INDIVIDUAL: BaseIndividual<*>>(): BaseSelec
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    override operator fun invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.size < k)
             throw PopulationTooSmallException("pop size = ${pop.size} < k = $k")

@@ -29,14 +29,14 @@ class SelectRouletteTest {
     }
 
     @Test
-    fun initialize() { SelectRoulette<MyIndividual>() }
+    fun initialize() { SelectRoulette() }
 
     @ParameterizedTest
     @MethodSource("popSizeValueProvider")
     fun `select correct num`(size: Int) {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRoulette<MyIndividual>()
+        val select = SelectRoulette()
         assertEquals(select(pop, size).size, size)
     }
 
@@ -44,7 +44,7 @@ class SelectRouletteTest {
     fun `select 0`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(1000)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRoulette<MyIndividual>()
+        val select = SelectRoulette()
         assertThrows<SelectionTooSmallException> { select(pop, 0) }
     }
 
@@ -52,7 +52,7 @@ class SelectRouletteTest {
     fun `select from empty`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(0)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRoulette<MyIndividual>()
+        val select = SelectRoulette()
         assertThrows<PopulationTooSmallException> { select(pop, 10) }
     }
 
@@ -60,7 +60,7 @@ class SelectRouletteTest {
     fun `select from small pop`() {
         val pop = PopulationFactory { MyIndividual() }.spawn(3)
         pop.forEach { it.fitness.value = Random.nextDouble() }
-        val select = SelectRoulette<MyIndividual>()
+        val select = SelectRoulette()
         assertEquals(select(pop, 5).size, 5)
     }
 }
