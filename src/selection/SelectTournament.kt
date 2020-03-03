@@ -39,18 +39,10 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      *
      * Selecting the same individual multiple times is possible.
      *
-     * [getFitness] is only needed if your individuals are highly customized and do
-     * not implement any predefined Individual class from KEvolve (hence the need for
-     * a user-defined method of getting the fitness).
-     *
-     * If you are using a class that implements an Individual class then
-     * `Individual.fitness` will be used as a default way to compare fitness scores.
-     *
      * @param pop The population to select from.
      * @param k The number of individuals to select.
-     * @param getFitness
-     *  A function that takes an individual and return a comparable value (an object
-     *  that implements [Comparable]).
+     *
+     * @return A [List] with the selected individuals.
      *
      * @throws PopulationTooSmallException
      * If the size of the population is less than [tournSize] since that would mean
@@ -59,10 +51,7 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    override operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>>
-            invoke(pop: List<INDIVIDUAL>,
-                   k: Int,
-                   getFitness: (INDIVIDUAL) -> FITNESS): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.size < tournSize)
             throw PopulationTooSmallException("pop size = ${pop.size} < tournSize = $tournSize")
@@ -76,7 +65,7 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
                 .distinct()
                 .take(tournSize)
                 .map { pop[it] }
-                .maxBy { getFitness(it) }!!
+                .maxBy { it.fitness }!!
         }
     }
 
