@@ -52,7 +52,7 @@ class SelectStochasticUniversalSampling: BaseSelection() {
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
-    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
+    override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): MutableList<INDIVIDUAL> {
 
         if (pop.isEmpty())
             throw PopulationTooSmallException("population size = ${pop.size} (empty)")
