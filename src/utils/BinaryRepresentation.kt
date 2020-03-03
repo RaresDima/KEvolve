@@ -49,7 +49,7 @@ class BinaryRepresentation(
 
     val precision: Double = 10.0.pow(-digits)
     val domainSize: Double = max - min
-    val nIntervals: Double = domainSize * precision
+    val nIntervals: Double = domainSize * 10.0.pow(digits)
     val nBits: Int = ceil(log2(nIntervals)).toInt()
 
     companion object {

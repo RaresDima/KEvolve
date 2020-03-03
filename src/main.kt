@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
 
     // Params
 
-    val MIN = 2 * +5.12
+    val MIN = -5.12
     val MAX = +5.12
     val DIGITS = 3
 
@@ -34,7 +34,6 @@ fun main(args: Array<String>) {
     }
 
     val popFactory = PopulationFactory { RastriginIndividual() }
-    val popFactoryy = PopulationFactory(::RastriginIndividual)
 
     val pop = popFactory.spawn(POP_SIZE)
 
@@ -42,7 +41,7 @@ fun main(args: Array<String>) {
 
     val select = SelectTournament(TOURN_SIZE)
 
-    select(pop, 5)
+    val s = select(pop, 5, RastriginIndividual::fitness)
 
     // Crossover
 

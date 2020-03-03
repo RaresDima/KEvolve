@@ -49,6 +49,25 @@ class SelectTournament(val tournSize: Int): BaseSelection() {
      * @throws SelectionTooSmallException
      * If [k] < 1 since it makes no sense to select 0 individuals.
      */
+    @JvmName("Generic")
+    operator fun <INDIVIDUAL, FITNESS: Comparable<FITNESS>> invoke(pop: List<INDIVIDUAL>, k: Int, getFitness: (INDIVIDUAL) -> FITNESS): List<INDIVIDUAL> {
+
+        if (pop.size < tournSize)
+            throw PopulationTooSmallException("pop size = ${pop.size} < tournSize = $tournSize")
+
+        if (k < 1)
+            throw SelectionTooSmallException("k = $k < 1")
+
+        return List(k) {
+            (0..pop.lastIndex)
+                .randomSequence()
+                .distinct()
+                .take(tournSize)
+                .map { pop[it] }
+                .maxBy { getFitness(it) }!!
+        }
+    }
+
     override operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): List<INDIVIDUAL> {
 
         if (pop.size < tournSize)
