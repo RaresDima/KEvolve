@@ -6,11 +6,6 @@ import utils.BinaryRepresentation
 import utils.Bit
 import kotlin.random.Random
 
-
-
-fun <T> List<T>.pairs() = slice(0 until lastIndex step 2).zip(slice(1 until lastIndex step 2))
-
-
 fun main(args: Array<String>) {
 
     // Params
@@ -43,9 +38,9 @@ fun main(args: Array<String>) {
 
     val select = SelectTournament(tournSize = TOURN_SIZE)
 
-    val crossover = CrossoverOnePoint { it.bits }
+    // TODO val crossover = CrossoverOnePoint { it.bits }
 
-    val mutate = MutateFlipBit(bitpb = 0.1) { it.bits }
+    // TODO val mutate = MutateFlipBit(bitpb = 0.1) { it.bits }
 
     // GA
 
@@ -62,9 +57,9 @@ fun main(args: Array<String>) {
                                                 // multiple times but it is still one object with multiple
                                                 // references to it.
 
-        for ((child1, child2) in offspring.pairs()) {    // Crossover
-            if (Random.nextDouble(1.0) < CX_PB) {  // offspring.pairs() -> (1,2), (3,4), (5,6), ...
-                crossover(child1, child2)
+        for ((child1, child2) in offspring.chunked(2)) {    // Crossover
+            if (Random.nextDouble(1.0) < CX_PB) {
+                // TODO crossover(child1, child2)
                 child1.fitness.invalidate()
                 child2.fitness.invalidate()
             }
@@ -72,7 +67,7 @@ fun main(args: Array<String>) {
 
         for (child in offspring) {
             if (Random.nextDouble(1.0) < MUT_PB) {  // Mutation
-                mutate(child)
+                // TODO mutate(child)
                 child.fitness.invalidate()
             }
         }

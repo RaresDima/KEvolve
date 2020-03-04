@@ -1,4 +1,4 @@
-package extensions
+package utils.extensions
 
 import kotlin.random.Random
 

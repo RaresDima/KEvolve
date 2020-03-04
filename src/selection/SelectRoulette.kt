@@ -1,9 +1,7 @@
 package selection
 
-import exceptions.selection.InvalidTournamentSizeException
 import exceptions.selection.PopulationTooSmallException
 import exceptions.selection.SelectionTooSmallException
-import extensions.randomSequence
 import individual.BaseIndividual
 import kotlin.random.Random
 

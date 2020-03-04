@@ -1,4 +1,4 @@
-package extensions.delegates
+package utils.extensions.delegates
 
 import exceptions.extensions.delegates.AlreadyAssignedPropertyAssignmentException
 import kotlin.properties.ReadWriteProperty

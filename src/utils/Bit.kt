@@ -1,6 +1,6 @@
 package utils
 
-import extensions.toInt
+import utils.extensions.toInt
 import kotlin.random.Random
 
 class Bit(value: Number) {

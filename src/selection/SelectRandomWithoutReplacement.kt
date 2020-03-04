@@ -2,7 +2,7 @@ package selection
 
 import exceptions.selection.PopulationTooSmallException
 import exceptions.selection.SelectionTooSmallException
-import extensions.randomSequence
+import utils.extensions.randomSequence
 import individual.BaseIndividual
 
 /**

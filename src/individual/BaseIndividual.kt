@@ -1,6 +1,6 @@
 package individual
 
-import extensions.delegates.AssignOnce
+import utils.extensions.delegates.AssignOnce
 import fitness.BaseFitness
 
 /**

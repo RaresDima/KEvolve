@@ -1,6 +1,6 @@
 package exceptions.extensions.delegates
 
-import extensions.delegates.AssignOnce
+import utils.extensions.delegates.AssignOnce
 
 /**
  * Thrown when a value is assigned to an [AssignOnce] property that already has a

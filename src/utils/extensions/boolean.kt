@@ -1,4 +1,4 @@
-package extensions
+package utils.extensions
 
 /**
  * Converts the [Boolean] to a [Byte]
