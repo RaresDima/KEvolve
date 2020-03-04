@@ -27,7 +27,7 @@ import exceptions.mutation.InvalidStDevException
  *  IS the DNA (the individual inherits [List] for example) this function can
  *  simply be the identity function.
  *
- * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1 or [std] <= 0.0.
+ * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1 or [std] < 0.0.
  */
 class MutateGaussianReplace<INDIVIDUAL, DNA: MutableList<Number>>(
     val genePb: Double,
@@ -43,7 +43,7 @@ class MutateGaussianReplace<INDIVIDUAL, DNA: MutableList<Number>>(
             throw InvalidProbabilityException("genePb = $genePb > 1.0")
 
         if (std <= 0.0)
-            throw InvalidStDevException("std = $std <= 0.0")
+            throw InvalidStDevException("std = $std < 0.0")
     }
 
     private val rand = java.util.Random()
