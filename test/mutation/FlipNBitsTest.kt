@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import utils.Bit
+import utils.extensions.hammingDistance
 import java.util.stream.Stream
 import kotlin.test.assertEquals
 
@@ -39,10 +40,11 @@ internal class FlipNBitsTest {
         assertThrows<InvalidNBitsException> { mutate(ind) }
     }
 
-//    @ParameterizedTest
-//    @MethodSource("bitStringValueProvider")
-//    fun `correct number of bits mutated`(ind: MutableList<Bit>) {
-//        val mutate = MutateFlipNBits(nBits = 3) { dna: MutableList<Bit> -> dna }
-//    }
+    @ParameterizedTest
+    @MethodSource("bitStringValueProvider")
+    fun `correct number of bits mutated`(ind: MutableList<Bit>) {
+        val mutate = MutateFlipNBits(nBits = 1 + ind.size.div(10)) { dna: MutableList<Bit> -> dna }
+        assertEquals(mutate(ind.map { it.copy() }.toMutableList()) hammingDistance ind, 1 + ind.size.div(10))
+    }
 
 }
