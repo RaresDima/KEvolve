@@ -11,14 +11,18 @@ import utils.Bit
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
  *  This function should return a reference to that DNA property. Usually this can
- *  be as simple as `{ return individual.myBits }`.
+ *  be as simple as `{ return individual.myBits }`. In the case that the individual
+ *  IS the DNA (the individual inherits [List] for example) this function can
+ *  simply be the identity function.
  *
  * @constructor
  * @param getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
  *  This function should return a reference to that DNA property. Usually this can
- *  be as simple as `{ return individual.myBits }`.
+ *  be as simple as `{ return individual.myBits }`. In the case that the individual
+ *  IS the DNA (the individual inherits [List] for example) this function can
+ *  simply be the identity function.
  */
 abstract class BaseMutation<INDIVIDUAL, DNA>(val getDna: (INDIVIDUAL) -> DNA) {
 

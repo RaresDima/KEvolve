@@ -1,5 +1,6 @@
 package mutation
 
+import exceptions.mutation.InvalidNBitsException
 import utils.Bit
 import utils.extensions.randomSequence
 
@@ -17,14 +18,18 @@ import utils.extensions.randomSequence
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
  *  This function should return a reference to that DNA property. Usually this can
- *  be as simple as `{ return individual.myBits }`.
+ *  be as simple as `{ return individual.myBits }`. In the case that the individual
+ *  IS the DNA (the individual inherits [List] for example) this function can
+ *  simply be the identity function.
+ *
+ * @throws InvalidNBitsException If [nBits] < 1.
  */
 class MutateFlipNBits<INDIVIDUAL, DNA: MutableList<Bit>>(val nBits: Int, getDna: (INDIVIDUAL) -> DNA):
     BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
     init {
-        if (tournSize < 2)
-            throw InvalidTournamentSizeException("tournSize = $tournSize < 2")
+        if (nBits < 1)
+            throw InvalidNBitsException("nBits = $nBits < 1")
     }
 
     /**
@@ -36,9 +41,15 @@ class MutateFlipNBits<INDIVIDUAL, DNA: MutableList<Bit>>(val nBits: Int, getDna:
      * @param ind The individual to mutate.
      *
      * @return The mutated individual.
+     *
+     * @throws InvalidNBitsException If [nBits] > [ind].dna.size.
      */
     override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL {
         val dna = getDna(ind)
+
+        if (nBits > dna.size)
+            throw InvalidNBitsException("nBits = $nBits > dna.size = ${dna.size}")
+
         (0..dna.lastIndex)
             .randomSequence()
             .distinct()
@@ -46,6 +57,7 @@ class MutateFlipNBits<INDIVIDUAL, DNA: MutableList<Bit>>(val nBits: Int, getDna:
             .forEach {
                 dna[it].flip()
             }
+
         return ind
     }
 
