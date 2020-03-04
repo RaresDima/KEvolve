@@ -2,10 +2,9 @@ package mutation
 
 import exceptions.mutation.InvalidProbabilityException
 import exceptions.mutation.InvalidStDevException
-import kotlin.random.Random
 
 /**
- * Replace values with other values returned by a function.
+ * Change values by adding other values extracted from a Gauss curve.
  *
  * Each value will have a chance to be replaced.
  *
@@ -13,13 +12,13 @@ import kotlin.random.Random
  * A reference to the original individual will be returned.
  *
  * @property genePb The chance to replace a value.
- * @property getValue
- *  A function that takes the current gene value and returns a [Double].
+ * @property mean The mean of the Gaussian distribution.
+ * @property std The standard error of the Gaussian distribution.
  *
  * @constructor
  * @param genePb The chance to replace a value.
- * @param getValue
- *  A function that takes the current gene value and returns a [Double].
+ * @param mean The mean of the Gaussian distribution.
+ * @param std The standard error of the Gaussian distribution.
  * @param getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
@@ -28,12 +27,12 @@ import kotlin.random.Random
  *  IS the DNA (the individual inherits [List] for example) this function can
  *  simply be the identity function.
  *
- * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1.
+ * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1 or [std] < 0.0.
  */
-class MutateValuePerturbate<INDIVIDUAL, DNA: MutableList<GENE>, GENE: Number>(
+class MutateGaussianPerturbation<INDIVIDUAL, DNA: MutableList<Number>>(
     val genePb: Double,
-    val getValue: (GENE) -> GENE,
-    getDna: (INDIVIDUAL) -> DNA
+    val mean: Double,
+    val std: Double, getDna: (INDIVIDUAL) -> DNA
 ): BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
     init {
@@ -42,7 +41,17 @@ class MutateValuePerturbate<INDIVIDUAL, DNA: MutableList<GENE>, GENE: Number>(
 
         if (genePb > 1.0)
             throw InvalidProbabilityException("genePb = $genePb > 1.0")
+
+        if (std <= 0.0)
+            throw InvalidStDevException("std = $std < 0.0")
     }
+
+    private val rand = java.util.Random()
+    private val mutateGaussian = MutateValueReplace(
+        genePb = genePb,
+        getValue = { it.toDouble() + (rand.nextGaussian() * std + mean) },
+        getDna = getDna
+    )
 
     /**
      * Replace values with other values extracted from a Gauss curve.
@@ -56,14 +65,6 @@ class MutateValuePerturbate<INDIVIDUAL, DNA: MutableList<GENE>, GENE: Number>(
      *
      * @return The mutated individual.
      */
-    override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL {
-        val dna = getDna(ind)
-
-        for (i in 0..dna.lastIndex)
-            if (Random.nextDouble(1.0) < genePb)
-                dna[i] = getValue(dna[i])
-
-        return ind
-    }
+    override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL = mutateGaussian(ind)
 
 }

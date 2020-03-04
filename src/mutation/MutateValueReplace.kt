@@ -13,11 +13,13 @@ import kotlin.random.Random
  * A reference to the original individual will be returned.
  *
  * @property genePb The chance to replace a value.
- * @property getValue A function that takes no arguments and returns a [Double].
+ * @property getValue
+ *  A function that takes the current gene value and returns a [Double].
  *
  * @constructor
  * @param genePb The chance to replace a value.
- * @param getValue A function that takes no arguments and returns a [Double].
+ * @param getValue
+ *  A function that takes the current gene value and returns a [Double].
  * @param getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
@@ -30,7 +32,7 @@ import kotlin.random.Random
  */
 class MutateValueReplace<INDIVIDUAL, DNA: MutableList<GENE>, GENE: Number>(
     val genePb: Double,
-    val getValue: () -> GENE,
+    val getValue: (GENE) -> GENE,
     getDna: (INDIVIDUAL) -> DNA
 ): BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
@@ -59,7 +61,7 @@ class MutateValueReplace<INDIVIDUAL, DNA: MutableList<GENE>, GENE: Number>(
 
         for (i in 0..dna.lastIndex)
             if (Random.nextDouble(1.0) < genePb)
-                dna[i] = getValue()
+                dna[i] = getValue(dna[i])
 
         return ind
     }
