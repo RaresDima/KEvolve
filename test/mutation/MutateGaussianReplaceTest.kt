@@ -48,9 +48,9 @@ internal class MutateGaussianReplaceTest {
     }
 
     @Test
-    fun `std dev is 0,0`() {
+    fun `std dev is -0,1`() {
         assertThrows<InvalidStDevException> {
-            MutateGaussianReplace(genePb = 0.5, mean = 0.0, std = 0.0) { ind: MyIndividual -> ind.dna }
+            MutateGaussianReplace(genePb = 0.5, mean = 0.0, std = -0.1) { ind: MyIndividual -> ind.dna }
         }
     }
 
