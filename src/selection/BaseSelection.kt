@@ -16,6 +16,6 @@ abstract class BaseSelection {
      *
      * @return A [List] with the selected individuals.
      */
-    abstract fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): MutableList<INDIVIDUAL>
+    abstract operator fun <INDIVIDUAL: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL>, k: Int): MutableList<INDIVIDUAL>
 
 }
