@@ -1,8 +1,8 @@
 package mutation
 
-import exceptions.mutation.InvalidNBitsException
+import exceptions.mutation.InvalidProbabilityException
 import utils.Bit
-import utils.extensions.randomSequence
+import kotlin.random.Random
 
 /**
  * Flip bits with a probability in the individual.
@@ -24,14 +24,17 @@ import utils.extensions.randomSequence
  *  IS the DNA (the individual inherits [List] for example) this function can
  *  simply be the identity function.
  *
- * @throws InvalidNBitsException If [bitPb] < 0.
+ * @throws InvalidProbabilityException If [bitPb] <= 0 or [bitPb] > 1.
  */
 class MutateFlipBits<INDIVIDUAL, DNA: MutableList<Bit>>(val bitPb: Double, getDna: (INDIVIDUAL) -> DNA):
     BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
     init {
-        if (bitPb < 1)
-            throw InvalidNBitsException("nBits = $bitPb < 1")
+        if (bitPb <= 0.0)
+            throw InvalidProbabilityException("bitPb = $bitPb <= 0.0")
+
+        if (bitPb > 1.0)
+            throw InvalidProbabilityException("bitPb = $bitPb > 1.0")
     }
 
     /**
@@ -45,22 +48,13 @@ class MutateFlipBits<INDIVIDUAL, DNA: MutableList<Bit>>(val bitPb: Double, getDn
      * @param ind The individual to mutate.
      *
      * @return The mutated individual.
-     *
-     * @throws InvalidNBitsException If [bitPb] > [ind].dna.size.
      */
     override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL {
         val dna = getDna(ind)
 
-        if (bitPb > dna.size)
-            throw InvalidNBitsException("nBits = $bitPb > dna.size = ${dna.size}")
-
-        (0..dna.lastIndex)
-            .randomSequence()
-            .distinct()
-            .take(bitPb)
-            .forEach {
-                dna[it].flip()
-            }
+        for (bit in dna)
+            if (Random.nextDouble(1.0) < bitPb)
+                bit.flip()
 
         return ind
     }
