@@ -39,9 +39,10 @@ internal class FlipNBitsTest {
         assertThrows<InvalidNBitsException> { mutate(ind) }
     }
 
-
 //    @ParameterizedTest
-//    @MethodSource("fitnessValueProvider")
-//    fun `value initialized`(v: Double) = assertEquals(Fitness().apply { value = v }.value, v)
+//    @MethodSource("bitStringValueProvider")
+//    fun `correct number of bits mutated`(ind: MutableList<Bit>) {
+//        val mutate = MutateFlipNBits(nBits = 3) { dna: MutableList<Bit> -> dna }
+//    }
 
 }
