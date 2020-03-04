@@ -2,6 +2,7 @@ package mutation
 
 import exceptions.mutation.InvalidProbabilityException
 import exceptions.mutation.InvalidStDevException
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,14 +16,14 @@ internal class MutateGaussianReplaceTest {
 
     companion object {
 
-        class MyIndividual(val dna: MutableList<Number>)
+        class MyIndividual(val dna: MutableList<Double>)
 
         @JvmStatic
         fun dnaValueProvider(): Stream<Arguments> = Stream.of(
             Arguments.of(MyIndividual(MutableList(1) { Random.nextDouble() })),
-            Arguments.of(MyIndividual(MutableList(10) { Random.nextFloat() })),
-            Arguments.of(MyIndividual(MutableList(100) { Random.nextLong() })),
-            Arguments.of(MyIndividual(MutableList(1000) { Random.nextInt() }))
+            Arguments.of(MyIndividual(MutableList(10) { Random.nextDouble() })),
+            Arguments.of(MyIndividual(MutableList(100) { Random.nextDouble() })),
+            Arguments.of(MyIndividual(MutableList(1000) { Random.nextDouble() }))
         )
 
     }

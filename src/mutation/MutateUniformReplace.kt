@@ -2,6 +2,7 @@ package mutation
 
 import exceptions.mutation.InvalidProbabilityException
 import exceptions.mutation.InvalidStDevException
+import exceptions.utils.InvalidDomainBoundsException
 import kotlin.random.Random
 
 /**
@@ -29,6 +30,7 @@ import kotlin.random.Random
  *  simply be the identity function.
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1.
+ * @throws InvalidDomainBoundsException If [min] >= [max].
  */
 class MutateUniformReplace<INDIVIDUAL, DNA: MutableList<Double>>(
     val genePb: Double,
@@ -43,6 +45,9 @@ class MutateUniformReplace<INDIVIDUAL, DNA: MutableList<Double>>(
 
         if (genePb > 1.0)
             throw InvalidProbabilityException("genePb = $genePb > 1.0")
+
+        if (min >= max)
+            throw InvalidDomainBoundsException("min = $min | max = $max | min >= max")
     }
 
     private val mutateUniform = MutateValueReplace(

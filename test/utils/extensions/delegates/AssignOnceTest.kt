@@ -1,6 +1,6 @@
 package utils.extensions.delegates
 
-import exceptions.extensions.delegates.AlreadyAssignedPropertyAssignmentException
+import exceptions.utils.extensions.delegates.AlreadyAssignedPropertyAssignmentException
 import fitness.Fitness
 import fitness.MultiObjectiveFitness
 import individual.Individual
