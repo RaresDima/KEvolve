@@ -62,7 +62,7 @@ class Bit(value: Number): Comparable<Bit> {
      */
     fun toBoolean(): Boolean = value != 0
 
-    override fun toString(): String = "Bit[$value]"
+    override fun toString(): String = "b$value"
 
     override fun equals(other: Any?): Boolean = if (other is Bit) value == other.value else false
     override fun compareTo(other: Bit): Int = value - other.value

@@ -22,6 +22,11 @@ import utils.extensions.randomSequence
 class MutateFlipNBits<INDIVIDUAL, DNA: MutableList<Bit>>(val nBits: Int, getDna: (INDIVIDUAL) -> DNA):
     BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
+    init {
+        if (tournSize < 2)
+            throw InvalidTournamentSizeException("tournSize = $tournSize < 2")
+    }
+
     /**
      * Flip [nBits] random bits in the individual.
      *
