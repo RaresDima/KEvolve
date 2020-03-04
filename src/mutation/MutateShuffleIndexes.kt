@@ -26,7 +26,7 @@ import kotlin.random.Random
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1.
  */
-class MutateShuffleIndexes<INDIVIDUAL, DNA: MutableList<Bit>>(val genePb: Double, getDna: (INDIVIDUAL) -> DNA):
+class MutateShuffleIndexes<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(val genePb: Double, getDna: (INDIVIDUAL) -> DNA):
     BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
     init {

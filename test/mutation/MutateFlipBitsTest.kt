@@ -54,7 +54,7 @@ internal class MutateFlipBitsTest {
 
     @ParameterizedTest
     @MethodSource("bitStringValueProvider")
-    fun `correct number of bits mutated`(ind: MyIndividual) {
+    fun `bits mutated successfully`(ind: MyIndividual) {
         val mutate = MutateFlipBits(bitPb = 1.0 / (ind.bits.size * 2.0)) { ind_: MyIndividual -> ind_.bits }
         mutate(ind)
     }

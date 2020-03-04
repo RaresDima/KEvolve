@@ -18,7 +18,7 @@ internal class MutateGaussianReplaceTest {
         class MyIndividual(val dna: MutableList<Number>)
 
         @JvmStatic
-        fun bitStringValueProvider(): Stream<Arguments> = Stream.of(
+        fun dnaValueProvider(): Stream<Arguments> = Stream.of(
             Arguments.of(MyIndividual(MutableList(1) { Random.nextDouble() })),
             Arguments.of(MyIndividual(MutableList(10) { Random.nextFloat() })),
             Arguments.of(MyIndividual(MutableList(100) { Random.nextLong() })),
@@ -29,19 +29,19 @@ internal class MutateGaussianReplaceTest {
 
 
     @Test
-    fun `bitPb is 0,0`() {
+    fun `genePb is 0,0`() {
         assertThrows<InvalidProbabilityException> {
             MutateGaussianReplace(genePb = 0.0, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
-    fun `bitPb is 1,0`() {
+    fun `genePb is 1,0`() {
         MutateGaussianReplace(genePb = 1.0, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
     }
 
     @Test
-    fun `bitPb is 1,1`() {
+    fun `genePb is 1,1`() {
         assertThrows<InvalidProbabilityException> {
             MutateGaussianReplace(genePb = 1.1, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
         }
@@ -62,8 +62,8 @@ internal class MutateGaussianReplaceTest {
     }
 
     @ParameterizedTest
-    @MethodSource("bitStringValueProvider")
-    fun `correct number of bits mutated`(ind: MyIndividual) {
+    @MethodSource("dnaValueProvider")
+    fun `genes mutated successfully`(ind: MyIndividual) {
         val mutate = MutateGaussianReplace(genePb = 0.5, mean = 0.0, std = 1.0) { ind_: MyIndividual -> ind_.dna }
         mutate(ind)
     }

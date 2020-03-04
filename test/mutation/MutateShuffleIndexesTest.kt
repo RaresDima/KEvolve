@@ -10,15 +10,16 @@ import org.junit.jupiter.params.provider.MethodSource
 import utils.Bit
 import java.util.stream.Stream
 import kotlin.random.Random
+import kotlin.test.assertEquals
 
-internal class MutateShuffleIndicesTest {
+internal class MutateShuffleIndexesTest {
 
     companion object {
 
         class MyIndividual(val dna: MutableList<Number>)
 
         @JvmStatic
-        fun bitStringValueProvider(): Stream<Arguments> = Stream.of(
+        fun dnaValueProvider(): Stream<Arguments> = Stream.of(
             Arguments.of(MyIndividual(MutableList(1) { Random.nextDouble() })),
             Arguments.of(MyIndividual(MutableList(10) { Random.nextFloat() })),
             Arguments.of(MyIndividual(MutableList(100) { Random.nextLong() })),
@@ -29,43 +30,39 @@ internal class MutateShuffleIndicesTest {
 
 
     @Test
-    fun `bitPb is 0,0`() {
+    fun `genePb is 0,0`() {
         assertThrows<InvalidProbabilityException> {
-            MutateGaussianReplace(genePb = 0.0, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
+            MutateShuffleIndexes(genePb = 0.0) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
-    fun `bitPb is 1,0`() {
-        MutateGaussianReplace(genePb = 1.0, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
+    fun `genePb is 1,0`() {
+        MutateShuffleIndexes(genePb = 1.0) { ind: MyIndividual -> ind.dna }
     }
 
     @Test
-    fun `bitPb is 1,1`() {
+    fun `genePb is 1,1`() {
         assertThrows<InvalidProbabilityException> {
-            MutateGaussianReplace(genePb = 1.1, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
-        }
-    }
-
-    @Test
-    fun `std dev is -0,1`() {
-        assertThrows<InvalidStDevException> {
-            MutateGaussianReplace(genePb = 0.5, mean = 0.0, std = -0.1) { ind: MyIndividual -> ind.dna }
+            MutateShuffleIndexes(genePb = 1.1) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
     fun `dna size is 0`() {
-        val mutate = MutateGaussianReplace(genePb = 0.5, mean = 0.0, std = 1.0) { ind: MyIndividual -> ind.dna }
+        val mutate = MutateShuffleIndexes(genePb = 0.5) { ind: MyIndividual -> ind.dna }
         val ind = MyIndividual(mutableListOf())
         mutate(ind)
     }
 
     @ParameterizedTest
-    @MethodSource("bitStringValueProvider")
-    fun `correct number of bits mutated`(ind: MyIndividual) {
-        val mutate = MutateGaussianReplace(genePb = 0.5, mean = 0.0, std = 1.0) { ind_: MyIndividual -> ind_.dna }
+    @MethodSource("dnaValueProvider")
+    fun `genes mutated successfully`(ind: MyIndividual) {
+        val mutate = MutateShuffleIndexes(genePb = 0.5) { ind_: MyIndividual -> ind_.dna }
+        val geneSet = ind.dna.toSet()
         mutate(ind)
+        val mutatedGeneSet = ind.dna.toSet()
+        assertEquals(geneSet, mutatedGeneSet)
     }
 
 }
