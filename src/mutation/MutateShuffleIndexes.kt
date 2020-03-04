@@ -1,5 +1,6 @@
 package mutation
 
+import exceptions.mutation.DnaTooSmallException
 import exceptions.mutation.InvalidProbabilityException
 import utils.Bit
 import kotlin.random.Random
@@ -51,6 +52,9 @@ class MutateShuffleIndexes<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(val genePb:
      */
     override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL {
         val dna = getDna(ind)
+
+        if (dna.size < 2)
+            throw DnaTooSmallException("dna.size = ${dna.size} < 2")
 
         for (i in 0..dna.lastIndex) {
             if (Random.nextDouble(1.0) < genePb) {

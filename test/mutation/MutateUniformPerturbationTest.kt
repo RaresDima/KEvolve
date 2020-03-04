@@ -1,18 +1,16 @@
 package mutation
 
 import exceptions.mutation.InvalidProbabilityException
-import exceptions.mutation.InvalidStDevException
 import exceptions.utils.InvalidDomainBoundsException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import utils.Bit
 import java.util.stream.Stream
 import kotlin.random.Random
 
-internal class MutateUniformReplaceTest {
+internal class MutateUniformPerturbationTest {
 
     companion object {
 
@@ -32,39 +30,39 @@ internal class MutateUniformReplaceTest {
     @Test
     fun `genePb is 0,0`() {
         assertThrows<InvalidProbabilityException> {
-            MutateUniformReplace(genePb = 0.0, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
+            MutateUniformPerturbation(genePb = 0.0, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
     fun `genePb is 1,0`() {
-        MutateUniformReplace(genePb = 1.0, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
+        MutateUniformPerturbation(genePb = 1.0, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
     }
 
     @Test
     fun `genePb is 1,1`() {
         assertThrows<InvalidProbabilityException> {
-            MutateUniformReplace(genePb = 1.1, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
+            MutateUniformPerturbation(genePb = 1.1, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
     fun `min gt max`() {
         assertThrows<InvalidDomainBoundsException> {
-            MutateUniformReplace(genePb = 0.5, min = 2.0, max = 1.0) { ind: MyIndividual -> ind.dna }
+            MutateUniformPerturbation(genePb = 0.5, min = 2.0, max = 1.0) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
     fun `min eq max`() {
         assertThrows<InvalidDomainBoundsException> {
-            MutateUniformReplace(genePb = 0.5, min = 1.0, max = 1.0) { ind: MyIndividual -> ind.dna }
+            MutateUniformPerturbation(genePb = 0.5, min = 1.0, max = 1.0) { ind: MyIndividual -> ind.dna }
         }
     }
 
     @Test
     fun `dna size is 0`() {
-        val mutate = MutateUniformReplace(genePb = 0.5, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
+        val mutate = MutateUniformPerturbation(genePb = 0.5, min = 0.0, max = 1.0) { ind: MyIndividual -> ind.dna }
         val ind = MyIndividual(mutableListOf())
         mutate(ind)
     }
@@ -72,7 +70,7 @@ internal class MutateUniformReplaceTest {
     @ParameterizedTest
     @MethodSource("dnaValueProvider")
     fun `genes mutated successfully`(ind: MyIndividual) {
-        val mutate = MutateUniformReplace(genePb = 0.5, min = 0.0, max = 1.0) { ind_: MyIndividual -> ind_.dna }
+        val mutate = MutateUniformPerturbation(genePb = 0.5, min = 0.0, max = 1.0) { ind_: MyIndividual -> ind_.dna }
         mutate(ind)
     }
 

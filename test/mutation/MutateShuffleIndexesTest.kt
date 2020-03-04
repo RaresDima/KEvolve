@@ -1,5 +1,6 @@
 package mutation
 
+import exceptions.mutation.DnaTooSmallException
 import exceptions.mutation.InvalidProbabilityException
 import exceptions.mutation.InvalidStDevException
 import org.junit.jupiter.api.Test
@@ -20,7 +21,7 @@ internal class MutateShuffleIndexesTest {
 
         @JvmStatic
         fun dnaValueProvider(): Stream<Arguments> = Stream.of(
-            Arguments.of(MyIndividual(MutableList(1) { Random.nextDouble() })),
+            Arguments.of(MyIndividual(MutableList(2) { Random.nextDouble() })),
             Arguments.of(MyIndividual(MutableList(10) { Random.nextFloat() })),
             Arguments.of(MyIndividual(MutableList(100) { Random.nextLong() })),
             Arguments.of(MyIndividual(MutableList(1000) { Random.nextInt() }))
@@ -50,9 +51,9 @@ internal class MutateShuffleIndexesTest {
 
     @Test
     fun `dna size is 0`() {
-        val mutate = MutateShuffleIndexes(genePb = 0.5) { ind: MyIndividual -> ind.dna }
+        val mutate = MutateShuffleIndexes(genePb = 1.0) { ind: MyIndividual -> ind.dna }
         val ind = MyIndividual(mutableListOf())
-        mutate(ind)
+        assertThrows<DnaTooSmallException> { mutate(ind) }
     }
 
     @ParameterizedTest
