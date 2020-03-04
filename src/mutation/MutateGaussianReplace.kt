@@ -32,7 +32,8 @@ import exceptions.mutation.InvalidStDevException
 class MutateGaussianReplace<INDIVIDUAL, DNA: MutableList<Number>>(
     val genePb: Double,
     val mean: Double,
-    val std: Double, getDna: (INDIVIDUAL) -> DNA
+    val std: Double,
+    getDna: (INDIVIDUAL) -> DNA
 ): BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
     init {

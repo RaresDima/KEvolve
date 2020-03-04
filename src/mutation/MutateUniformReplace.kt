@@ -5,7 +5,7 @@ import exceptions.mutation.InvalidStDevException
 import kotlin.random.Random
 
 /**
- * Replace values with other values returned by a function.
+ * Replace values with other random values.
  *
  * Each value will have a chance to be replaced.
  *
@@ -13,13 +13,13 @@ import kotlin.random.Random
  * A reference to the original individual will be returned.
  *
  * @property genePb The chance to replace a value.
- * @property getValue
- *  A function that takes the current gene value and returns a [Double].
+ * @property min The min value to be assigned.
+ * @property std The max value to be assigned.
  *
  * @constructor
  * @param genePb The chance to replace a value.
- * @param getValue
- *  A function that takes the current gene value and returns a [Double].
+ * @param min The min value to be assigned.
+ * @param std The max value to be assigned.
  * @param getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
@@ -30,9 +30,10 @@ import kotlin.random.Random
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1.
  */
-class MutateValueReplace<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
+class MutateUniformReplace<INDIVIDUAL, DNA: MutableList<Number>>(
     val genePb: Double,
-    val getValue: (GENE) -> GENE,
+    val min: Double,
+    val max: Double,
     getDna: (INDIVIDUAL) -> DNA
 ): BaseMutation<INDIVIDUAL, DNA>(getDna) {
 
@@ -43,6 +44,12 @@ class MutateValueReplace<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
         if (genePb > 1.0)
             throw InvalidProbabilityException("genePb = $genePb > 1.0")
     }
+
+    private val mutateUniform = MutateValueReplace(
+        genePb = genePb,
+        getValue = { Random.nextDouble(min, max) },
+        getDna = getDna
+    )
 
     /**
      * Replace values with other values extracted from a Gauss curve.
@@ -56,14 +63,6 @@ class MutateValueReplace<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
      *
      * @return The mutated individual.
      */
-    override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL {
-        val dna = getDna(ind)
-
-        for (i in 0..dna.lastIndex)
-            if (Random.nextDouble(1.0) < genePb)
-                dna[i] = getValue(dna[i])
-
-        return ind
-    }
+    override operator fun invoke(ind: INDIVIDUAL): INDIVIDUAL = mutateUniform(ind)
 
 }
