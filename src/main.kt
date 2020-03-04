@@ -1,5 +1,6 @@
 import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
+import mutation.MutateFlipBits
 import population.PopulationFactory
 import selection.SelectTournament
 import utils.BinaryRepresentation
@@ -40,7 +41,7 @@ fun main(args: Array<String>) {
 
     // TODO val crossover = CrossoverOnePoint { it.bits }
 
-    // TODO val mutate = MutateFlipBit(bitpb = 0.1) { it.bits }
+    val mutate = MutateFlipBits(bitPb = 0.1) { it.bits }
 
     // GA
 
@@ -67,7 +68,7 @@ fun main(args: Array<String>) {
 
         for (child in offspring) {
             if (Random.nextDouble(1.0) < MUT_PB) {  // Mutation
-                // TODO mutate(child)
+                mutate(child)
                 child.fitness.invalidate()
             }
         }
