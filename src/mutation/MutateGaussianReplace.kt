@@ -29,7 +29,7 @@ import exceptions.mutation.InvalidStDevException
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1 or [std] < 0.0.
  */
-class MutateGaussianReplace<INDIVIDUAL, DNA: MutableList<Number>>(
+class MutateGaussianReplace<INDIVIDUAL, DNA: MutableList<Double>>(
     val genePb: Double,
     val mean: Double,
     val std: Double,
@@ -50,7 +50,7 @@ class MutateGaussianReplace<INDIVIDUAL, DNA: MutableList<Number>>(
     private val rand = java.util.Random()
     private val mutateGaussian = MutateValueReplace(
         genePb = genePb,
-        getValue = { rand.nextGaussian() * std + mean },
+        getValue = { (rand.nextGaussian() * std + mean) },
         getDna = getDna
     )
 

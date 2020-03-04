@@ -14,12 +14,12 @@ import kotlin.random.Random
  *
  * @property genePb The chance to replace a value.
  * @property min The min value to be assigned.
- * @property std The max value to be assigned.
+ * @property max The max value to be assigned.
  *
  * @constructor
  * @param genePb The chance to replace a value.
  * @param min The min value to be assigned.
- * @param std The max value to be assigned.
+ * @param max The max value to be assigned.
  * @param getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
@@ -30,7 +30,7 @@ import kotlin.random.Random
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1.
  */
-class MutateUniformReplace<INDIVIDUAL, DNA: MutableList<Number>>(
+class MutateUniformReplace<INDIVIDUAL, DNA: MutableList<Double>>(
     val genePb: Double,
     val min: Double,
     val max: Double,

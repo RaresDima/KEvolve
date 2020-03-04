@@ -29,7 +29,7 @@ import exceptions.mutation.InvalidStDevException
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1 or [std] < 0.0.
  */
-class MutateGaussianPerturbation<INDIVIDUAL, DNA: MutableList<Number>>(
+class MutateGaussianPerturbation<INDIVIDUAL, DNA: MutableList<Double>>(
     val genePb: Double,
     val mean: Double,
     val std: Double,
