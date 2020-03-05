@@ -51,7 +51,7 @@ abstract class CrossoverOnePoint<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(getDn
         dna1.addAll(0, dna2half1)
 
         dna2.remove(0..cuttingPoint)
-        dna2.addAll(0, dna2half1)
+        dna2.addAll(0, dna1half1)
 
         return ind1 to ind2
     }
