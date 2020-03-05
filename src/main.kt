@@ -1,4 +1,4 @@
-import benchmark.CustomFitnessFunction
+import benchmark.FitnessFunctionCustom
 import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
 import mutation.MutateCustom
@@ -7,8 +7,8 @@ import population.PopulationFactory
 import selection.SelectTournament
 import utils.BinaryRepresentation
 import utils.Bit
+import kotlin.math.pow
 import kotlin.random.Random
-import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
 
@@ -45,8 +45,8 @@ fun main(args: Array<String>) {
     val mutate = MutateFlipBits(bitPb = 0.1) { ind: RastriginIndividual -> ind.bits }
 
 
-    val fitnessCustom = CustomFitnessFunction { ind: RastriginIndividual, _ ->
-        5.0
+    val fitnessCustom = FitnessFunctionCustom { ind: RastriginIndividual, _ ->
+        ind.bits.sumBy { it.value }.toDouble().pow(1.0 / ind.bits.size)
     }
 
     val mutateCustom = MutateCustom { ind: RastriginIndividual, _ ->

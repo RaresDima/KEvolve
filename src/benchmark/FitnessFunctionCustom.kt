@@ -1,11 +1,5 @@
 package benchmark
 
-import mutation.BaseMutation
-import mutation.MutateCustom
-import java.lang.IllegalStateException
-import kotlin.math.PI
-import kotlin.math.cos
-
 /**
  * A custom fitness function.
  *
@@ -13,13 +7,13 @@ import kotlin.math.cos
  *  A [Map] mapping [String] to [Any]. This is intended to be used as a way to
  *  store any additional data you might need, regardless of the type. This [Map] is
  *  passed to [fitness] when it is called so it can be used to conveniently
- *  transfer data from outside the [CustomFitnessFunction] to inside the function
- *  used by [CustomFitnessFunction].
+ *  transfer data from outside the [FitnessFunctionCustom] to inside the function
+ *  used by [FitnessFunctionCustom].
  *
  *  Since the values in the [Map] are stored as [Any] they need to be cast back to
  *  their original types when accessed. E.g:
  *
- *  `CustomFitnessFunction("num" to 6.0) { ind: MyIndividual, data ->`
+ *  `FitnessFunctionCustom("num" to 6.0) { ind: MyIndividual, data ->`
  *
  *  `ind.someValue / (data["num"] as Double)`
  *
@@ -30,8 +24,8 @@ import kotlin.math.cos
  *  A [Map] mapping [String] to [Any]. This is intended to be used as a way to
  *  store any additional data you might need, regardless of the type. This [Map] is
  *  passed to [fitness] when it is called so it can be used to conveniently
- *  transfer data from outside the [CustomFitnessFunction] to inside the function
- *  used by [CustomFitnessFunction].
+ *  transfer data from outside the [FitnessFunctionCustom] to inside the function
+ *  used by [FitnessFunctionCustom].
  * @param fitness
  *  A function that takes an Individual and a [Map] mapping [String] to [Any].
  *  It should return the fitness of that individual. This fitness will probably be
@@ -39,7 +33,7 @@ import kotlin.math.cos
  *  or the same individual mutated in-place. The [Map] will contain any additional
  *  data placed into [data].
  */
-class CustomFitnessFunction<INDIVIDUAL, FITNESS>(
+class FitnessFunctionCustom<INDIVIDUAL, FITNESS>(
     val data: Map<String, Any>,
     private val fitness: (INDIVIDUAL, Map<String, Any>) -> FITNESS) {
 
@@ -49,7 +43,7 @@ class CustomFitnessFunction<INDIVIDUAL, FITNESS>(
      *  used as a way to store any additional data you might need for the fitness,
      *  regardless of the type. This [Map] is passed to [fitness] when it is called so
      *  it can be used to conveniently transfer data from outside the
-     *  [CustomFitnessFunction] to inside the function used by [CustomFitnessFunction].
+     *  [FitnessFunctionCustom] to inside the function used by [FitnessFunctionCustom].
      * @param fitness
      *  A function that takes an Individual and a [Map] mapping [String] to [Any].
      *  It should return the fitness of that individual. This fitness will probably be
