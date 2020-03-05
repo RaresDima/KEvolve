@@ -37,14 +37,16 @@ class PopulationFactory<INDIVIDUAL: BaseIndividual<*>>(
     val createIndividual: () -> INDIVIDUAL
 ) {
 
+    companion object {
+        internal val cloner = Cloner()
+    }
+
     /**
      * @param createIndividual
      *  A function that takes no arguments and creates an individual.
      *  I.e. an instance of [INDIVIDUAL].
      */
     constructor(createIndividual: () -> INDIVIDUAL): this(listOf(), createIndividual)
-
-    private val cloner = Cloner()
 
     /**
      * Spawns (instantiates) an individual.

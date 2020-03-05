@@ -1,8 +1,10 @@
 package crossover
 
 /**
- * Base Crossover class that exposes functionalities all Crossover algorithms
- * should have.
+ * Crossover with 1 cutting point.
+ *
+ * A cutting point is randomly determines and the individuals are crossed over at
+ * that cutting point.
  *
  * @property getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
@@ -21,16 +23,29 @@ package crossover
  *  IS the DNA (the individual inherits [List] for example) this function can
  *  simply be the identity function.
  */
-abstract class BaseCrossover<INDIVIDUAL, DNA>(val getDna: (INDIVIDUAL) -> DNA) {
+abstract class CrossoverOnePoint<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(getDna: (INDIVIDUAL) -> DNA):
+    BaseCrossover<INDIVIDUAL, DNA>(getDna) {
 
     /**
-     * Mutate the provided number of individual.
+     * Crossover with 1 cutting point.
      *
      * @param ind1 The individual to crossover.
      * @param ind2 The individual to crossover.
      *
      * @return A [Pair] with the children of the individuals.
      */
-    abstract operator fun invoke(ind1: INDIVIDUAL, ind2: INDIVIDUAL): Pair<INDIVIDUAL, INDIVIDUAL>
+    override operator fun invoke(ind1: INDIVIDUAL, ind2: INDIVIDUAL): Pair<INDIVIDUAL, INDIVIDUAL> {
+        val dna1 = getDna(ind1)
+        val dna2 = getDna(ind2)
+
+        val minDnaSize = minOf(dna1.size, dna2.size)
+        val cuttingPointRange = 0 until minDnaSize
+        val cuttingPoint = cuttingPointRange.random()
+
+
+
+
+        return ind1 to ind2
+    }
 
 }

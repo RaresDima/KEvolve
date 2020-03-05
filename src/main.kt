@@ -1,11 +1,13 @@
 import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
+import mutation.MutateCustom
 import mutation.MutateFlipBits
 import population.PopulationFactory
 import selection.SelectTournament
 import utils.BinaryRepresentation
 import utils.Bit
 import kotlin.random.Random
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
 
@@ -17,8 +19,6 @@ fun main(args: Array<String>) {
 
     val DIMS = 3
     val POP_SIZE = 100
-
-    val TOURN_SIZE = 3
 
     val CX_PB = 0.5
     val MUT_PB = 0.1
@@ -37,11 +37,19 @@ fun main(args: Array<String>) {
 
     val fitness = Rastrigin()
 
-    val select = SelectTournament(tournSize = TOURN_SIZE)
+    val select = SelectTournament(tournSize = 3)
 
     // TODO val crossover = CrossoverOnePoint { it.bits }
 
-    val mutate = MutateFlipBits(bitPb = 0.1) { it.bits }
+    val mutate = MutateFlipBits(bitPb = 0.1) { ind: RastriginIndividual -> ind.bits }
+
+    val mutateCustom = MutateCustom { ind: RastriginIndividual ->
+        mutate(ind)
+        mutate(ind)
+        ind
+    }
+
+
 
     // GA
 

@@ -2,6 +2,7 @@ package individual
 
 import utils.extensions.delegates.AssignOnce
 import fitness.BaseFitness
+import population.PopulationFactory
 
 /**
  * Base Individual class that exposes functionalities all Individual classes
