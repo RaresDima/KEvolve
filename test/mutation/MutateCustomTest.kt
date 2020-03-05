@@ -33,14 +33,14 @@ internal class MutateCustomTest {
 
     @Test
     fun `access getDna()`() {
-        val mutate = MutateCustom { ind: MyIndividual -> ind }
+        val mutate = MutateCustom { ind: MyIndividual, _ -> ind }
         val ind = MyIndividual(MutableList(10) { Random.nextDouble() })
         assertThrows<IllegalStateException> { mutate.getDna(ind) }
     }
 
     @Test
     fun `dna size is 0`() {
-        val mutate = MutateCustom { ind: MyIndividual -> ind }
+        val mutate = MutateCustom { ind: MyIndividual, _ -> ind }
         val ind = MyIndividual(mutableListOf())
         mutate(ind)
     }
@@ -48,7 +48,12 @@ internal class MutateCustomTest {
     @ParameterizedTest
     @MethodSource("dnaValueProvider")
     fun `genes mutated successfully div 2`(ind: MyIndividual) {
-        val mutate = MutateCustom { ind_: MyIndividual -> ind_.dna.replaceAll { it / 2.0 } ; ind }
+
+        val mutate = MutateCustom("divisor" to 2.0) { ind_: MyIndividual, data ->
+            ind_.dna.replaceAll { it / (data["divisor"] as Double) }
+            ind
+        }
+
         val originalDna = ind.dna.toMutableList()
         val mutant = mutate(ind)
         assertEquals(mutant.dna.map { it * 2.0 }, originalDna)

@@ -43,7 +43,7 @@ fun main(args: Array<String>) {
 
     val mutate = MutateFlipBits(bitPb = 0.1) { ind: RastriginIndividual -> ind.bits }
 
-    val mutateCustom = MutateCustom { ind: RastriginIndividual ->
+    val mutateCustom = MutateCustom { ind: RastriginIndividual, _ ->
         mutate(ind)
         mutate(ind)
         ind
