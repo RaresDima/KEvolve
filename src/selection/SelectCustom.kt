@@ -12,9 +12,6 @@ import individual.BaseIndividual
  * without creating a new class yet. A class inheriting [BaseSelection] will very
  * likely be more powerful and lead to cleaner code than a [SelectCustom] though.
  *
- * - NOTE: This class does not implement [BaseSelection] because it would have
- * imposed restrictions on the functions that can be used for the selection.
- *
  * @property data
  *  A [Map] mapping [String] to [Any]. This is intended to be used as a way to
  *  store any additional data you might need, regardless of the type. This [Map] is
@@ -45,9 +42,9 @@ import individual.BaseIndividual
  *  individuals in the initial population. The [Map] will contain any additional
  *  data placed into [data].
  */
-class SelectCustom<INDIVIDUAL>(
+class SelectCustom<INDIVIDUAL: BaseIndividual<*>>(
     val data: Map<String, Any>,
-    private val select: (List<INDIVIDUAL>, Int, Map<String, Any>) -> MutableList<INDIVIDUAL>) {
+    private val select: (List<INDIVIDUAL>, Int, Map<String, Any>) -> MutableList<INDIVIDUAL>): BaseSelection() {
 
     /**
      * @param data
@@ -74,6 +71,7 @@ class SelectCustom<INDIVIDUAL>(
      *
      * @return A [List] with the selected individuals.
      */
-    operator fun invoke(pop: List<INDIVIDUAL>, k: Int): MutableList<INDIVIDUAL> = select(pop, k, data)
+    override fun <INDIVIDUAL_: BaseIndividual<*>> invoke(pop: List<INDIVIDUAL_>, k: Int): MutableList<INDIVIDUAL_> =
+        select(pop.map { it as INDIVIDUAL }, k, data).map { it as INDIVIDUAL_ }.toMutableList()
 
 }

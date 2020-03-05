@@ -4,6 +4,7 @@ import individual.Individual
 import mutation.MutateCustom
 import mutation.MutateFlipBits
 import population.PopulationFactory
+import selection.SelectCustom
 import selection.SelectTournament
 import utils.BinaryRepresentation
 import utils.Bit
@@ -49,6 +50,10 @@ fun main(args: Array<String>) {
         ind.bits.sumBy { it.value }.toDouble().pow(1.0 / ind.bits.size)
     }
 
+    val selectCustom = SelectCustom { pop: List<RastriginIndividual>, k, data ->
+        (1..k).map { pop.random() }.toMutableList()
+    }
+
     val mutateCustom = MutateCustom { ind: RastriginIndividual, _ ->
         mutate(ind)
         mutate(ind)
@@ -60,6 +65,8 @@ fun main(args: Array<String>) {
     // GA
 
     val pop = popFactory.spawn(POP_SIZE)  // Create the population.
+
+    selectCustom(pop, 5)
 
     for (ind in pop)
         ind.fitness.value = fitness(repr.splitToReal(ind.bits))  // Evaluate the population
