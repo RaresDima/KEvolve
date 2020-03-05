@@ -10,6 +10,7 @@ import java.util.stream.Stream
 internal class ListKtTest {
 
     companion object {
+
         @JvmStatic
         fun bitStringPairArgsProvider(): Stream<Arguments> = Stream.of(
 
@@ -55,11 +56,37 @@ internal class ListKtTest {
                 1
             )
         )
+
+        @JvmStatic
+        fun intListArgsProvider(): Stream<Arguments> = Stream.of(
+            Arguments.of(MutableList(10) { it }, 2..5),
+            Arguments.of(MutableList(100) { it }, 3 until 77),
+            Arguments.of(MutableList(1000) { it }, 666..900),
+            Arguments.of(MutableList(10000) { it }, 9990..9995)
+        )
     }
 
     @ParameterizedTest
     @MethodSource("bitStringPairArgsProvider")
-    fun toByte(bitString1: MutableList<Bit>, bitString2: MutableList<Bit>, expected: Int) =
+    fun `hamming distance`(bitString1: MutableList<Bit>, bitString2: MutableList<Bit>, expected: Int) =
         assertEquals(bitString1 hammingDistance bitString2, expected)
+
+
+    @ParameterizedTest
+    @MethodSource("intListArgsProvider")
+    fun `remove slice removes correctly`(lst: MutableList<Int>, range: IntRange) {
+        val initSet = (0..lst.lastIndex).toSet()
+        val removedSet = range.toSet()
+        lst.remove(range)
+        assertEquals(lst.toSet(), initSet - removedSet)
+    }
+
+    @ParameterizedTest
+    @MethodSource("intListArgsProvider")
+    fun `remove slice returns removed slice`(lst: MutableList<Int>, range: IntRange) {
+        val setToRemove = range.toSet()
+        val removedSet = lst.remove(range).toSet()
+        assertEquals(setToRemove, removedSet)
+    }
 
 }

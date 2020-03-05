@@ -1,5 +1,7 @@
 package crossover
 
+import utils.extensions.remove
+
 /**
  * Crossover with 1 cutting point.
  *
@@ -42,8 +44,14 @@ abstract class CrossoverOnePoint<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(getDn
         val cuttingPointRange = 0 until minDnaSize
         val cuttingPoint = cuttingPointRange.random()
 
+        val dna1half1 = dna1.slice(0..cuttingPoint)
+        val dna2half1 = dna2.slice(0..cuttingPoint)
 
+        dna1.remove(0..cuttingPoint)
+        dna1.addAll(0, dna2half1)
 
+        dna2.remove(0..cuttingPoint)
+        dna2.addAll(0, dna2half1)
 
         return ind1 to ind2
     }
