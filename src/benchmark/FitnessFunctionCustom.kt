@@ -3,6 +3,10 @@ package benchmark
 /**
  * A custom fitness function.
  *
+ * - NOTE: [FitnessFunctionCustom] provides a quick way to test more complex mutation logic
+ * without creating a new class yet. A class inheriting a Base Fitness class will very
+ * likely be more powerful and lead to cleaner code than a [FitnessFunctionCustom] though.
+ *
  * @property data
  *  A [Map] mapping [String] to [Any]. This is intended to be used as a way to
  *  store any additional data you might need, regardless of the type. This [Map] is
