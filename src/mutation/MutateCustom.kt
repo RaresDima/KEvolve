@@ -32,6 +32,8 @@ class MutateCustom<INDIVIDUAL>(val mutate: (INDIVIDUAL) -> INDIVIDUAL):
         )
     }) {
 
+    var data: Map<String, Any> = mapOf()
+
     /**
      * Replace values in the individual using [mutate].
      *
