@@ -1,3 +1,4 @@
+import benchmark.CustomFitnessFunction
 import benchmark.continuous.singleobjective.Rastrigin
 import individual.Individual
 import mutation.MutateCustom
@@ -42,6 +43,11 @@ fun main(args: Array<String>) {
     // TODO val crossover = CrossoverOnePoint { it.bits }
 
     val mutate = MutateFlipBits(bitPb = 0.1) { ind: RastriginIndividual -> ind.bits }
+
+
+    val fitnessCustom = CustomFitnessFunction { ind: RastriginIndividual, _ ->
+        5.0
+    }
 
     val mutateCustom = MutateCustom { ind: RastriginIndividual, _ ->
         mutate(ind)
