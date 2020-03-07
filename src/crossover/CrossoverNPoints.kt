@@ -84,6 +84,7 @@ class CrossoverNPoints<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
             cuttingPoints.add(minDnaSize)
 
         for ((cuttingPoint1, cuttingPoint2) in cuttingPoints.chunked(2)) {
+
             val dnaPartRange = cuttingPoint1 until cuttingPoint2
 
             val dna1part = dna1.slice(dnaPartRange)
