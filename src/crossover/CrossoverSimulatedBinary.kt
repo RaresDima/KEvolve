@@ -3,6 +3,7 @@ package crossover
 import exceptions.operators.DnaTooSmallException
 import exceptions.operators.InvalidNCuttingPointsException
 import exceptions.operators.InvalidProbabilityException
+import exceptions.operators.InvalidSbxEtaException
 import utils.extensions.randomSequence
 import utils.extensions.remove
 import kotlin.math.pow
@@ -38,6 +39,7 @@ import kotlin.random.Random
  *  simply be the identity function.
  *
  * @throws InvalidProbabilityException If [genePb] <= 0 or [genePb] > 1.
+ * @throws InvalidSbxEtaException If [eta] == -1.0.
  */
 class CrossoverSimulatedBinary<INDIVIDUAL, DNA: MutableList<Double>>(
     val eta: Double,
@@ -52,6 +54,9 @@ class CrossoverSimulatedBinary<INDIVIDUAL, DNA: MutableList<Double>>(
 
         if (genePb > 1.0)
             throw InvalidProbabilityException("genePb = $genePb > 1.0")
+
+        if (eta == -1.0)
+            throw InvalidSbxEtaException("eta = $eta == -1.0")
     }
 
     /**
