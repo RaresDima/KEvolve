@@ -1,6 +1,7 @@
 package crossover
 
 import exceptions.operators.DnaTooSmallException
+import exceptions.operators.InvalidNCuttingPointsException
 import utils.extensions.randomSequence
 import utils.extensions.remove
 
@@ -30,13 +31,19 @@ import utils.extensions.remove
  *  IS the DNA (the individual inherits [List] for example) this function can
  *  simply be the identity function.
  *
- *  @throws
+ * @throws InvalidNCuttingPointsException
+ *  If [nCuttingPoints] < 1 since that would mean no cutting points.
  */
 class CrossoverNPoints<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
     val nCuttingPoints: Int,
     getDna: (INDIVIDUAL) -> DNA):
 
     BaseCrossover<INDIVIDUAL, DNA>(getDna) {
+
+    init {
+        if (nCuttingPoints < 1)
+            throw InvalidNCuttingPointsException("nCuttingPoints = $nCuttingPoints < 1")
+    }
 
     /**
      * Crossover with n cutting points.
@@ -49,7 +56,10 @@ class CrossoverNPoints<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
      *
      * @return A [Pair] with the children of the individuals.
      *
-     * @throws DnaTooSmallException If the dna.size of either individual is < 2.
+     * @throws DnaTooSmallException
+     *  If the dna.size of either individual is < 2.
+     *  Or if the dna.size is < [nCuttingPoints] + 1 since that would mean more cutting
+     *  points than possible segments of dna.
      */
     override operator fun invoke(ind1: INDIVIDUAL, ind2: INDIVIDUAL): Pair<INDIVIDUAL, INDIVIDUAL> {
         val dna1 = getDna(ind1)
@@ -62,11 +72,15 @@ class CrossoverNPoints<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
             throw DnaTooSmallException("ind2.dna.size = ${dna2.size} < 2")
 
         val minDnaSize = minOf(dna1.size, dna2.size)
+
+        if (minDnaSize < nCuttingPoints + 1)
+            throw DnaTooSmallException("dna.size = $minDnaSize < nCuttingPoints + 1 = ${nCuttingPoints + 1}")
+
         val cuttingPointRange = 1..minDnaSize
 
         val cuttingPoints = cuttingPointRange.randomSequence().distinct().take(nCuttingPoints).sorted().toMutableList()
         cuttingPoints.add(0, 0)
-        if (nCuttingPoints % 2 == 1)
+        if (cuttingPoints.size % 2 == 1)
             cuttingPoints.add(minDnaSize)
 
         for ((cuttingPoint1, cuttingPoint2) in cuttingPoints.chunked(2)) {
