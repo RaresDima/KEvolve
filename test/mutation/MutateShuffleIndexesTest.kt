@@ -1,14 +1,12 @@
 package mutation
 
-import exceptions.mutation.DnaTooSmallException
-import exceptions.mutation.InvalidProbabilityException
-import exceptions.mutation.InvalidStDevException
+import exceptions.operators.DnaTooSmallException
+import exceptions.operators.InvalidProbabilityException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import utils.Bit
 import java.util.stream.Stream
 import kotlin.random.Random
 import kotlin.test.assertEquals

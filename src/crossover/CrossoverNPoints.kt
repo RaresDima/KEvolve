@@ -1,13 +1,16 @@
 package crossover
 
 import exceptions.operators.DnaTooSmallException
+import utils.extensions.randomSequence
 import utils.extensions.remove
 
 /**
- * Crossover with 1 cutting point.
+ * Crossover with n cutting points.
  *
- * A cutting point is randomly determined and the individuals are crossed over at
+ * N cutting points is randomly determined and the individuals are crossed over at
  * that cutting point.
+ *
+ * @property nCuttingPoints The number of cutting points to use.
  *
  * @property getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
@@ -18,6 +21,7 @@ import utils.extensions.remove
  *  simply be the identity function.
  *
  * @constructor
+ * @param nCuttingPoints The number of cutting points to use.
  * @param getDna
  *  A function that takes one Individual and returns a reference to its DNA. Most
  *  classes used as individuals will have a property that represents their DNA.
@@ -25,14 +29,19 @@ import utils.extensions.remove
  *  be as simple as `{ return individual.myBits }`. In the case that the individual
  *  IS the DNA (the individual inherits [List] for example) this function can
  *  simply be the identity function.
+ *
+ *  @throws
  */
-class CrossoverOnePoint<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(getDna: (INDIVIDUAL) -> DNA):
+class CrossoverNPoints<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(
+    val nCuttingPoints: Int,
+    getDna: (INDIVIDUAL) -> DNA):
+
     BaseCrossover<INDIVIDUAL, DNA>(getDna) {
 
     /**
-     * Crossover with 1 cutting point.
+     * Crossover with n cutting points.
      *
-     * A cutting point is randomly determined and the individuals are crossed over at
+     * N cutting points is randomly determined and the individuals are crossed over at
      * that cutting point.
      *
      * @param ind1 The individual to crossover.
@@ -54,18 +63,24 @@ class CrossoverOnePoint<INDIVIDUAL, DNA: MutableList<GENE>, GENE>(getDna: (INDIV
 
         val minDnaSize = minOf(dna1.size, dna2.size)
         val cuttingPointRange = 1..minDnaSize
-        val cuttingPoint = cuttingPointRange.random()
 
-        val half1Range = 0 until cuttingPoint
+        val cuttingPoints = cuttingPointRange.randomSequence().distinct().take(nCuttingPoints).sorted().toMutableList()
+        cuttingPoints.add(0, 0)
+        if (nCuttingPoints % 2 == 1)
+            cuttingPoints.add(minDnaSize)
 
-        val dna1half1 = dna1.slice(half1Range)
-        val dna2half1 = dna2.slice(half1Range)
+        for ((cuttingPoint1, cuttingPoint2) in cuttingPoints.chunked(2)) {
+            val dnaPartRange = cuttingPoint1 until cuttingPoint2
 
-        dna1.remove(half1Range)
-        dna1.addAll(0, dna2half1)
+            val dna1part = dna1.slice(dnaPartRange)
+            val dna2part = dna2.slice(dnaPartRange)
 
-        dna2.remove(half1Range)
-        dna2.addAll(0, dna1half1)
+            dna1.remove(dnaPartRange)
+            dna1.addAll(cuttingPoint1, dna2part)
+
+            dna2.remove(dnaPartRange)
+            dna2.addAll(cuttingPoint1, dna1part)
+        }
 
         return ind1 to ind2
     }

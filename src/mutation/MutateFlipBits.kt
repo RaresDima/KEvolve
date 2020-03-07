@@ -1,6 +1,6 @@
 package mutation
 
-import exceptions.mutation.InvalidProbabilityException
+import exceptions.operators.InvalidProbabilityException
 import utils.Bit
 import kotlin.random.Random
 

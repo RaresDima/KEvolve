@@ -1,7 +1,7 @@
 package mutation
 
-import exceptions.mutation.InvalidProbabilityException
-import exceptions.mutation.InvalidStDevException
+import exceptions.operators.InvalidProbabilityException
+import exceptions.operators.InvalidStDevException
 
 /**
  * Replace values with other values extracted from a Gauss curve.

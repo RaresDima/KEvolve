@@ -1,8 +1,7 @@
 package mutation
 
-import exceptions.mutation.DnaTooSmallException
-import exceptions.mutation.InvalidProbabilityException
-import utils.Bit
+import exceptions.operators.DnaTooSmallException
+import exceptions.operators.InvalidProbabilityException
 import kotlin.random.Random
 
 /**

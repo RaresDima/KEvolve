@@ -1,6 +1,6 @@
 package mutation
 
-import exceptions.mutation.InvalidProbabilityException
+import exceptions.operators.InvalidProbabilityException
 import exceptions.utils.InvalidDomainBoundsException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

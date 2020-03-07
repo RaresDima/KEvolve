@@ -1,6 +1,6 @@
 package mutation
 
-import exceptions.mutation.InvalidNBitsException
+import exceptions.operators.InvalidNBitsException
 import utils.Bit
 import utils.extensions.randomSequence
 

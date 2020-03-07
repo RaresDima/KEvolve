@@ -1,4 +1,4 @@
-package exceptions.mutation
+package exceptions.operators
 
 import mutation.MutateGaussianReplace
 

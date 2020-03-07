@@ -1,6 +1,6 @@
 package mutation
 
-import exceptions.mutation.InvalidNBitsException
+import exceptions.operators.InvalidNBitsException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
